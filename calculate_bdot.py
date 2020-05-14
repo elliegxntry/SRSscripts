@@ -11,6 +11,8 @@ import new_athena_read as read
 from kerrmetric import kerr,fourvector
 import matplotlib.pyplot as plt
 
+#this is a test comment
+
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 dist = "B"
 radius = 1.52
@@ -20,7 +22,7 @@ do_Bcc1 = False
 do_Bcc2 = False
 do_Bcc3 = True
 
-config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
+config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_brsssrl2x2"
 datapath_base = datapath + config
 if do_Bcc1:
     data_save_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/Bcc1/"

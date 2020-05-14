@@ -6,7 +6,7 @@ import warnings
 import numpy as np
 import os
 import sys
-sys.path.append("C:/Users/Ellie/Downloads/nerd/athena-public-version/vis/python/modules")
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules")
 import new_athena_read as read
 
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"

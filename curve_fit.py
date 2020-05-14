@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import os
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules")
 
 quantities = ['rho', 'press', 'vel1', 'vel2', 'vel3', 'Bcc1', 'Bcc2', 'Bcc3']
 quantity_names = {"rho": "Density", "press": "Pressure", "vel1": "Radial velocity", "vel2": "Theta velocity",

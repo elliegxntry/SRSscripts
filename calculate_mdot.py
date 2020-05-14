@@ -6,7 +6,7 @@ import warnings
 import numpy as np
 import os
 import sys
-sys.path.append("C:/Users/Ellie/Downloads/nerd/athena-public-version/vis/python/modules")
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules")
 import new_athena_read as read
 from kerrmetric import kerr,fourvector
 import matplotlib.pyplot as plt
@@ -23,7 +23,7 @@ data_load_path = datapath_base + config + "/"
 radius = 1.52
 mdot_path = data_save_path + "mdot-data_r{}.txt".format(radius)
 
-time_steps = np.arange(440, 671)
+time_steps = np.arange(440, 441)
 header = ""
 
 for time in time_steps:
