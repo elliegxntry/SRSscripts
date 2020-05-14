@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os
 import sys
 import csv
-sys.path.append(".../GRvis-master/modules")
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
 import new_athena_read
 
 dist = "B"
@@ -21,9 +21,18 @@ for time in timesteps:
         mdot = mdot_data[100:, 1]
     with open(data_save_path, "w"):
         np.savetxt(time, radius, mdot)
-
-for r in radius:
-    with open(data_save_path, "r") as file:
-        new_data = np.loadtxt(file)
-    r = new_data[1]
-
+with open(data_save_path, "r") as file:
+    new_data = np.loadtxt(file)
+tavg_mdot = np.mean(new_data, axis=2)
+plt.figure()
+plt.plot(new_data[1], tavg_mdot)
+plt.xlabel("Radius")
+plt.ylabel("Mass Flux")
+plt.title("Time averaged mass flux")
+figname = "tavg_mdot_over_r"
+fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/tavg_mdot/"
+if not os.path.isdirs(fig_save_path):
+    os.makedirs(fig_save_path)
+plt.savefig(fig_save_path + figname)
+plt.show()
+plt.close()
