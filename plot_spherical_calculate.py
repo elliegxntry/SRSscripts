@@ -1,25 +1,16 @@
+# import packages
 import sys
 sys.path.append("C:/Users/Ellie/Downloads/nerd/athena-public-version/vis/python/modules")
-#matplotlib.use('agg')
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import kerrmetric as kerr
-# Other Python modules
 import numpy as np
 import os
+import new_athena_read
 
-
-# Athena++ modules
-from scripts import athena_read
-
+# specifications
 times = np.arange(0, 671)
 dist = "Beta"
-config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
-data_file = "C:/Users/Ellie/Downloads/nerd/SRSData/"
-
-
-# average for
-sim_str = "Constant_" + dist + "_"
 quantity = "vel1"
 do_vertical = False
 do_diff = True
@@ -31,10 +22,15 @@ ylims = [-r_max, r_max]
 cmap = "RdBu"
 vmin = None
 vmax = None
-datapath_base = data_file + config
 
 raw_quantities = ['rho', 'press', 'vel1', 'vel2', 'vel3', 'Bcc1', 'Bcc2', 'Bcc3']
 calc_quantities = ['u1', 'rhou1', 'bsq', 'beta', 'test']
+
+# path to load data
+config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
+data_file = "C:/Users/Ellie/Downloads/nerd/SRSData/"
+sim_str = "Constant_" + dist + "_"
+datapath_base = data_file + config
 
 def get_calculated_data(data_in, calc_q):
     r = data_in["x1v"]
@@ -56,7 +52,6 @@ def get_calculated_data(data_in, calc_q):
 
 if do_diff:
     datat0_name = data_file + config + "/" + config + ".prim.00000.athdf"
-
     if quantity in raw_quantities:
         datat0 = athena_read.athdf(datat0_name, quantities=[quantity])
     elif quantity in calc_quantities:
@@ -66,7 +61,7 @@ if do_diff:
 for timestep in times:
     timestep = "{:05d}".format(int(timestep))
     filepath = datapath_base + "/" + config + ".prim." + timestep + ".athdf"
-    print("Loading time step {}".format(timestep))
+    #print("Loading time step {}".format(timestep))
 
     # Main function
     filename = sim_str + quantity
@@ -185,7 +180,7 @@ for timestep in times:
     filedir += "Slices/" + dist + "/"
     if not os.path.isdir(filedir):
         os.makedirs(filedir)
-    print(filedir)
+    #print(filedir)
     plt.savefig(filedir + filename, bbox_inches='tight')
-    #plt.show()
+    plt.show()
     plt.close()

@@ -1,46 +1,47 @@
 # Other Python modules
+# import packages
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import sys
+sys.path.append("C:/Users/Ellie/downloads/nerd/scripts/modules")
+import new_athena_read
 
-# Athena++ modules
-from scripts import athena_read
-
+# specifications
 times_to_look_at = np.arange(0, 671)
-
 mag_force = False
 nonmag_force = True
 total_force = False
 lines = True
 specific = True
 
+# Path to load data
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 configA = "1.1.1-torus2_b-gz2_a0beta500torBeta_br32x32x64rl2x2"
 configB = "1.1.1-torus2_b-gz2_a0beta500torB_br32x32x64rl2x2"
 datapath_baseA = datapath + configA
 datapath_baseB = datapath + configB
 
-# dictionary, input "rho" or "Bcc1" or smth, get out info in the corresponding value
+# dictionary for quantities
 quantities = ['press', 'Bcc1', 'Bcc2', 'Bcc3']
 quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity", "vel2":"Theta velocity",
                   "vel3":"Azimuthal velocity", "Bcc1":"Radial magnetic field", "Bcc2":"Theta magnetic field",
                   "Bcc3":"Azimuthal magnetic field"}
 
+# Calculate forces
 for timestep in times_to_look_at:
     timestep = "{:05d}".format(int(timestep))
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
-    print("Loading time step {}".format(timestep))
-    dataA = athena_read.athdf(filepathA, quantities=quantities)
-    dataB = athena_read.athdf(filepathB, quantities=quantities)
+    #print("Loading time step {}".format(timestep))
+    dataA = new_athena_read.athdf(filepathA, quantities=quantities)
+    dataB = new_athena_read.athdf(filepathB, quantities=quantities)
 
-# "Time" is how that variable is titled in the data, so the capital is important
+    # define variables
     simulation_timeA = dataA["Time"]
     simulation_timeB = dataB["Time"]
-
     r = dataA["x1v"]
     theta = dataA["x2v"]
-
     pressdataA = dataA['press']
     pressdataB = dataB['press']
     pmagdataA = 0.5 * (dataA['Bcc1'] ** 2 + dataA['Bcc2'] ** 2 + dataA['Bcc3'] ** 2)

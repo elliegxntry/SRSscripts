@@ -15,9 +15,11 @@ file.
 
 # Python modules
 import argparse
+import sys
+sys.path.append("C:/Users/Ellie/downloads/nerd/scripts/modules/")
 
 # Athena++ modules
-from scripts import athena_read
+import new_athena_read
 
 
 # Main function
@@ -109,11 +111,11 @@ def main(**kwargs):
     y_vals = []
     for n in range(num_lines):
         if data_files[n][-6:] == '.athdf':
-            data = athena_read.athdf(data_files[n])
+            data = new_athena_read.athdf(data_files[n])
         elif data_files[n][-4:] == '.hst':
-            data = athena_read.hst(data_files[n])
+            data = new_athena_read.hst(data_files[n])
         else:
-            data = athena_read.tab(data_files[n])
+            data = new_athena_read.tab(data_files[n])
         x_vals.append(data[x_names[n]].flatten())
         y_vals.append(data[y_names[n]].flatten())
 

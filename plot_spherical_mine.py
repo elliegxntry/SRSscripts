@@ -1,4 +1,4 @@
-#matplotlib.use('agg')
+# import packages
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 # Other Python modules
@@ -9,11 +9,6 @@ from scripts import athena_read
 
 times = np.arange(0, 1)
 dist = "Beta"
-config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
-data_file = "C:/Users/Ellie/Downloads/nerd/SRSData/"
-
-# average for
-sim_str = "Constant_" + dist + "_"
 quantity = "rho"
 do_midplane = True
 do_average = False
@@ -24,7 +19,13 @@ ylims = [-r_max, r_max]
 cmap = "viridis"
 vmin = 1e0
 vmax = -1e-3
+
+# load data
+sim_str = "Constant_" + dist + "_"
+config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
+data_file = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 datapath_base = data_file + config
+
 for timestep in times:
     timestep = "{:05d}".format(int(timestep))
     filepath = datapath_base + "/" + config + ".prim." + timestep + ".athdf"

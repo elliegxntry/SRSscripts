@@ -1,13 +1,16 @@
 # Other Python modules
+# import packages
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
+import new_athena_read
 
-# Athena++ modules
-from scripts import athena_read
+## This is the most useful forces script - mag tension is GR and has good boolean usage
 
+# specifications
 times_to_look_at = np.arange(0, 671)
-
 mag_force = False
 nonmag_force = False
 total_force = True
@@ -20,27 +23,26 @@ configB = "1.1.1-torus2_b-gz2_a0beta500torB_br32x32x64rl2x2"
 datapath_baseA = datapath + configA
 datapath_baseB = datapath + configB
 
-# dictionary, input "rho" or "Bcc1" or smth, get out info in the corresponding value
+# dictionary for quantities necessary
 quantities = ['press', 'Bcc1', 'Bcc2', 'Bcc3']
 quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity", "vel2":"Theta velocity",
                   "vel3":"Azimuthal velocity", "Bcc1":"Radial magnetic field", "Bcc2":"Theta magnetic field",
                   "Bcc3":"Azimuthal magnetic field"}
 
+#calculate forces at local frame for each timestep
 for timestep in times_to_look_at:
     timestep = "{:05d}".format(int(timestep))
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
-    print("Loading time step {}".format(timestep))
+    #print("Loading time step {}".format(timestep))
     dataA = athena_read.athdf(filepathA, quantities=quantities)
     dataB = athena_read.athdf(filepathB, quantities=quantities)
 
-    # "Time" is how that variable is titled in the data, so the capital is important
+    # Get variables from data
     simulation_timeA = dataA["Time"]
     simulation_timeB = dataB["Time"]
-
     r = dataA["x1v"]
     theta = dataA["x2v"]
-
     pressdataA = dataA['press']
     pressdataB = dataB['press']
     pmagdataA = 0.5 * (dataA['Bcc1'] ** 2 + dataA['Bcc2'] ** 2 + dataA['Bcc3'] ** 2)
@@ -50,6 +52,7 @@ for timestep in times_to_look_at:
     phi_index = 0; radius_index = 0; theta_indexA = int(pressdataA.shape[1] / 2)
     phi_index = 0; radius_index = 0; theta_indexB = int(pressdataB.shape[1] / 2)
 
+    # calculate gas pressure
     if nonmag_force:
         dthetapressA = np.gradient(dataA['press'], dataA['x1v'], edge_order=2, axis=1) / r
         dthetapressB = np.gradient(dataB['press'], dataB['x1v'], edge_order=2, axis=1) / r
@@ -58,7 +61,7 @@ for timestep in times_to_look_at:
         pressforceB = 0.5 * (dthetapressB[phi_index, theta_indexB, :] + dthetapressB[phi_index, theta_indexB - 1, :])
 
     if mag_force:
-        #does this also have to be averaged?
+        # calculate magnetic pressure
         pmag_radial_dataA = 0.5 * (pmagdataA[phi_index, theta_indexA, :] + pmagdataA[phi_index, theta_indexA - 1, :])
         pmag_radial_dataB = 0.5 * (pmagdataB[phi_index, theta_indexB, :] + pmagdataB[phi_index, theta_indexB - 1, :])
 
@@ -72,6 +75,7 @@ for timestep in times_to_look_at:
         pmagforceA = -np.gradient(pmag_radial_dataA, dataA['x1v'], edge_order=2)
         pmagforceB = -np.gradient(pmag_radial_dataB, dataB['x1v'], edge_order=2)
 
+        # set up variables for magnetic tension
         drBrA = np.gradient(Bcc1_radial_dataA, dataA['x1v'], edge_order=2) #derivative of Bcc1 with respect to radius
         drBrB = np.gradient(Bcc1_radial_dataB, dataB['x1v'], edge_order=2) #derivative of Bcc1 with respect to radius
         dthetaBrA = np.gradient(dataA['Bcc1'], dataA['x2v'], edge_order=2, axis=1) #derivative of Bcc1 with respect to theta
@@ -101,6 +105,7 @@ for timestep in times_to_look_at:
 
         total_mag_forceB = magtensionB + pmagforceB
 
+    # Repeats of the above calculations but all together
     if total_force:
         dthetapressA = np.gradient(dataA['press'], dataA['x1v'], edge_order=2, axis=1) / r
         dthetapressB = np.gradient(dataB['press'], dataB['x1v'], edge_order=2, axis=1) / r

@@ -1,5 +1,5 @@
 import sys
-sys.path.append('../modules/')
+sys.path.append('C:/Users/Ellie/Downloads/nerd/scripts/GRvis-master/modules/')
 from setup_manager import *
 from plotting_utils import *
 

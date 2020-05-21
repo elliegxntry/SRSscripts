@@ -1,28 +1,23 @@
-# Other Python modules
+# import Python modules
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-
-# Athena++ modules
-from scripts import athena_read
+import sys
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
+import new_athena_read
 
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 config = "1.1.1-torus2_b-gz2_a0beta500torBeta_br32x32x64rl2x2"
 datapath_base = datapath + config
 
-# Timesteps NOT time numbers, this is what shows up in the file name
-# np.arange(start, stop, step) for even steps
-# np.linspace(start, stop, number of samples*, endpoint (t/f)*) for evenly spaced steps over the interval
 times_to_look_at = np.arange(0, 600, 100)
-#times_to_look_at = np.arange(0, 200, 100)
-# times_to_look_at = np.concatenate((np.arange(0, 26), np.arange(27, 448)))
+quantities_to_load = ['vel2', 'Bcc2']
 
-# dictionary, input "rho" or "Bcc1" or smth, get out info in the corresponding value
+# dictionary for quantities
 quantities = ['rho', 'press', 'vel1', 'vel2', 'vel3', 'Bcc1', 'Bcc2', 'Bcc3']
 quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity", "vel2":"Theta velocity",
                   "vel3":"Azimuthal velocity", "Bcc1":"Radial magnetic field", "Bcc2":"Theta magnetic field",
                   "Bcc3":"Azimuthal magnetic field"}
-quantities_to_load = ['vel2', 'Bcc2']
 
 for timestep in times_to_look_at:
     timestep = "{:05d}".format(int(timestep))
@@ -30,16 +25,10 @@ for timestep in times_to_look_at:
     print("Loading time step {}".format(timestep))
     data = athena_read.athdf(filepath, quantities=quantities_to_load)
 
-    # print(data.keys())
-    # print("Simulation time is {}".format(data["Time"]))
-
-
-# "Time" is how that variable is titled in the data, so the capital is important
+    # get variables
     simulation_time = data["Time"]
-
-
     theta_values = data['x2v']
-    print(theta_values[int(theta_values.size/2)])
+    #print(theta_values[int(theta_values.size/2)])
 
     radius_in_codeunits = 4
     radiusind = (np.abs(data['x1v'] - radius_in_codeunits)).argmin()
@@ -61,8 +50,8 @@ for timestep in times_to_look_at:
     filedir ="C:/Users/Ellie/Downloads/nerd/SRSProfiles/v2b2corr_thetaprofile_c01/"
     if not os.path.isdir(filedir):
         os.mkdir(filedir)
-    print(filedir)
-    print("Saving figure " + filedir + figname)
+    #print(filedir)
+    #print("Saving figure " + filedir + figname)
     plt.savefig(filedir + figname)
     plt.show()
     plt.gca().clear()
