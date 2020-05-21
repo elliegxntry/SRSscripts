@@ -10,7 +10,7 @@ import new_athena_read
 ## This is the most useful forces script - mag tension is GR and has good boolean usage
 
 # specifications
-times_to_look_at = np.arange(0, 671)
+times_to_look_at = np.arange(0, 1)
 mag_force = False
 nonmag_force = False
 total_force = True
@@ -35,13 +35,15 @@ for timestep in times_to_look_at:
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
     #print("Loading time step {}".format(timestep))
-    dataA = athena_read.athdf(filepathA, quantities=quantities)
-    dataB = athena_read.athdf(filepathB, quantities=quantities)
+    dataA = new_athena_read.athdf(filepathA, quantities=quantities)
+    dataB = new_athena_read.athdf(filepathB, quantities=quantities)
 
     # Get variables from data
     simulation_timeA = dataA["Time"]
     simulation_timeB = dataB["Time"]
     r = dataA["x1v"]
+    print("r's shape:")
+    print(r.shape)
     theta = dataA["x2v"]
     pressdataA = dataA['press']
     pressdataB = dataB['press']
@@ -54,11 +56,15 @@ for timestep in times_to_look_at:
 
     # calculate gas pressure
     if nonmag_force:
-        dthetapressA = np.gradient(dataA['press'], dataA['x1v'], edge_order=2, axis=1) / r
-        dthetapressB = np.gradient(dataB['press'], dataB['x1v'], edge_order=2, axis=1) / r
+        drpressA = np.gradient(dataA['press'], r, edge_order=2, axis=2)
+        drpressB = np.gradient(dataB['press'], r, edge_order=2, axis=2)
+        print("dtheta shape")
+        print(dthetapressA.shape)
+        print("gradient shape")
+        print(np.gradient(dataA['press'], theta, edge_order=2, axis=1).shape)
 
-        pressforceA = 0.5 * (dthetapressA[phi_index, theta_indexA, :] + dthetapressA[phi_index, theta_indexA - 1, :])
-        pressforceB = 0.5 * (dthetapressB[phi_index, theta_indexB, :] + dthetapressB[phi_index, theta_indexB - 1, :])
+        pressforceA = - 0.5 * (drpressA[phi_index, theta_indexA, :] + drpressA[phi_index, theta_indexA - 1, :])
+        pressforceB = - 0.5 * (drpressB[phi_index, theta_indexB, :] + drpressB[phi_index, theta_indexB - 1, :])
 
     if mag_force:
         # calculate magnetic pressure
@@ -107,11 +113,11 @@ for timestep in times_to_look_at:
 
     # Repeats of the above calculations but all together
     if total_force:
-        dthetapressA = np.gradient(dataA['press'], dataA['x1v'], edge_order=2, axis=1) / r
-        dthetapressB = np.gradient(dataB['press'], dataB['x1v'], edge_order=2, axis=1) / r
+        drpressA = np.gradient(dataA['press'], dataA['x1v'], edge_order=2, axis=2)
+        drpressB = np.gradient(dataB['press'], dataB['x1v'], edge_order=2, axis=2)
 
-        pressforceA = 0.5 * (dthetapressA[phi_index, theta_indexA, :] + dthetapressA[phi_index, theta_indexA - 1, :])
-        pressforceB = 0.5 * (dthetapressB[phi_index, theta_indexB, :] + dthetapressB[phi_index, theta_indexB - 1, :])
+        pressforceA = - 0.5 * (drpressA[phi_index, theta_indexA, :] + drpressA[phi_index, theta_indexA - 1, :])
+        pressforceB = - 0.5 * (drpressB[phi_index, theta_indexB, :] + drpressB[phi_index, theta_indexB - 1, :])
 
         pmag_radial_dataA = 0.5 * (pmagdataA[phi_index, theta_indexA, :] + pmagdataA[phi_index, theta_indexA - 1, :])
         pmag_radial_dataB = 0.5 * (pmagdataB[phi_index, theta_indexB, :] + pmagdataB[phi_index, theta_indexB - 1, :])
@@ -323,7 +329,7 @@ for timestep in times_to_look_at:
             # print(filedir)
             # print("Saving figure " + filedir + figname)
             plt.savefig(filedir + figname)
-        #plt.show()
+        plt.show()
         plt.gca().clear()
         plt.close()
     if total_force:
@@ -343,6 +349,6 @@ for timestep in times_to_look_at:
             # print(filedir)
             # print("Saving figure " + filedir + figname)
             plt.savefig(filedir + figname)
-        #plt.show()
+        plt.show()
         plt.gca().clear()
         plt.close()
