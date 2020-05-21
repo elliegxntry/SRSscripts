@@ -5,18 +5,19 @@ import os
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
+## I'm pretty sure this is a repeat of curve fit without accurate directories
+
 # ----- Input Parameters ------
 # What to plot
 radius = 10.0
 quantity = "Bcc1"
 m_to_plot = 1
+dist = "Beta"
 # Which simulation to run
 config = "1.1.1-torus2_b-gz2"
-specs = "a0beta500torB_br32x32x64rl2x2"
-specs = "a0beta500torBeta_br32x32x64rl2x2"
+specs = "a0beta500tor" + dist + "_br32x32x64rl2x2"
 # where to get data from
-# Ellie will need to set data_save_path to datapath, fourier_path to path
-data_save_path = "/run/media/amha5924/data/" + config + "_" + specs + "/data/reduced/"
+data_save_path = "C:/Users/Ellie/downloads/nerd/SRSdata/reduced/Constant" + dist + "/"
 fourier_path = "fourier-amplitude-" + quantity + "_data_r{}.txt".format(radius)
 
 
@@ -28,8 +29,7 @@ specstr = {"a0beta500torB_br32x32x64rl2x2":"Constant Magnetic Field B","a0beta50
 specname = {"a0beta500torB_br32x32x64rl2x2":"ConstantB","a0beta500torBeta_br32x32x64rl2x2":"ConstantBeta"}
 
 # where to save figures
-fig_save_dir = "/home/amha5924/research/projects/gr-torus/figures/fourier_amplitude/" + quantity + "/" + specname[specs] + "/"
-# figsavedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/mode_amplitude/ConstantBeta/"
+figsavedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/mode_amplitude/ConstantBeta/"
 fig_name = "m{}_r{}.png".format(m_to_plot, radius)
 
 def exponential(norm_times, amp, gamma, offset):

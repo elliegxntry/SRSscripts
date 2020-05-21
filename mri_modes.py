@@ -1,21 +1,25 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# Import packages
 import numpy as np
 import os
 import new_athena_read as read
 import matplotlib.pyplot as plt
 
+# Specifications
 radius = 10.0
 theta = np.pi/2
 quantity = 'Bcc1'
 dist = 'B'
+time_steps = np.arange(0, 671)
+wavelengths = None
 
-
+# Paths to load and save data
 config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 data_load_path = datapath + config + "/"
-print(data_load_path)
+#print(data_load_path)
 data_save_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/Fourier/"
 if not os.path.isdir(data_save_path):
     os.mkdir(data_save_path)
@@ -23,14 +27,13 @@ figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/timemodes/" + dist + "/
 if not os.path.isdir(figsavepath):
     os.mkdir(figsavepath)
 amp_path = data_save_path + "fourier-amplitude-" + quantity + "_data_r{}.txt".format(radius)
-print(amp_path)
-time_steps = np.arange(0, 671)
-wavelengths = None
+#print(amp_path)
 
+# Calculate modes for each timestep
 for time in time_steps:
     header = ""
     fname = data_load_path + config + ".prim.{:05d}.athdf".format(time)
-    print("Loading time {}".format(time))
+    #print("Loading time {}".format(time))
 
     # read in data only as function of phi
     raw_data = read.athdf(fname,quantities=[quantity],x1_min=radius, x1_max=radius, x2_min=theta, x2_max=theta+0.01) 
@@ -82,6 +85,7 @@ for i in np.arange(1, N_phi//2):
 with open(amp_path, "w") as f:
     np.savetxt(f, sorted_ampdata, header=header)
 
+# Plot m1 over time
 plt.figure()
 plt.plot(unique_times, sorted_ampdata[:, 2], '+')
 plt.xlabel("Time [GM/c^3]")
@@ -89,6 +93,7 @@ plt.ylabel("M1")
 plt.title(quantity + "\nConstant " + dist + "\n radius={} [GM/c^2]".format(radius) + config)
 plt.tight_layout()
 
+# Plot several modes over time
 plt.figure()
 mstart = 1
 mend = 3

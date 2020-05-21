@@ -2,9 +2,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import sys
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
 
 # Athena++ modules
-from scripts import athena_read
+import new_athena_read
 
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 configA = "1.1.1-torus2_b-gz2_a0beta500torBeta_br32x32x64rl2x2"
@@ -27,8 +29,8 @@ for timestep in times_to_look_at:
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
     print("Loading time step {}".format(timestep))
-    dataA = athena_read.athdf(filepathA, quantities=[quantity_to_load])
-    dataB = athena_read.athdf(filepathB, quantities=[quantity_to_load])
+    dataA = new_athena_read.athdf(filepathA, quantities=[quantity_to_load])
+    dataB = new_athena_read.athdf(filepathB, quantities=[quantity_to_load])
 
     simulation_timeA = dataA["Time"]
     simulation_timeB = dataB["Time"]

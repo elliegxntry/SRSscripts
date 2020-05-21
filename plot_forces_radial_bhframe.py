@@ -1,14 +1,18 @@
-# Other Python modules
+# import packages
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import sys
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
 import kerrmetric as kerr
+import new_athena_read
 
-# Athena++ modules
-from scripts import athena_read
+# tbh this script doesn't do much because mag tension is not GR
 
+# specifications
 times_to_look_at = np.arange(0, 671)
 
+# path to load data
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 configA = "1.1.1-torus2_b-gz2_a0beta500torBeta_br32x32x64rl2x2"
 configB = "1.1.1-torus2_b-gz2_a0beta500torB_br32x32x64rl2x2"
@@ -16,32 +20,34 @@ datapath_baseA = datapath + configA
 datapath_baseB = datapath + configB
 
 
-# dictionary, input "rho" or "Bcc1" or smth, get out info in the corresponding value
+# dictionary for quantities
 quantities = ['press', 'vel1', 'vel2', 'vel3', 'Bcc1', 'Bcc2', 'Bcc3']
 quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity", "vel2":"Theta velocity",
                   "vel3":"Azimuthal velocity", "Bcc1":"Radial magnetic field", "Bcc2":"Theta magnetic field",
                   "Bcc3":"Azimuthal magnetic field"}
 
+# calculate and plot forces as a function of time
 for timestep in times_to_look_at:
     timestep = "{:05d}".format(int(timestep))
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
-    print("Loading time step {}".format(timestep))
-    dataA = athena_read.athdf(filepathA, quantities=quantities)
-    dataB = athena_read.athdf(filepathB, quantities=quantities)
+    #print("Loading time step {}".format(timestep))
+    dataA = new_athena_read.athdf(filepathA, quantities=quantities)
+    dataB = new_athena_read.athdf(filepathB, quantities=quantities)
 
     # print(data.keys())
     # print("Simulation time is {}".format(data["Time"]))
 
-
-# "Time" is how that variable is titled in the data, so the capital is important
+    # Define variables based on data
+        # "Time" is how that variable is titled in the data, so the capital is important
     simulation_timeA = dataA["Time"]
     simulation_timeB = dataB["Time"]
-
     pressdataA = dataA['press']
     pressdataB = dataB['press']
     r = dataA["x1v"]
     theta = dataA["x2v"]
+
+    # Define metric variables
     metric = kerr.kerr(r, theta)
     fourvectorA = kerr.fourvector(r, theta, dataA['vel1'], dataA['vel2'], dataA['vel3'], dataA['Bcc1'], dataA['Bcc2'],
                                  dataA['Bcc3'])
@@ -50,9 +56,10 @@ for timestep in times_to_look_at:
                                   dataB['Bcc3'])
     pmagdataB = fourvectorB.pmag
 
+    # Define radius
     radius_in_codeunits = 5
     radiusind = (np.abs(dataA['x1v'] - radius_in_codeunits)).argmin()
-   # print(radiusind)
+    # print(radiusind)
 
     # get line out at constant radius
     phi_index = 0; radius_index = 0; theta_indexA = int(pressdataA.shape[1]/2)
@@ -76,7 +83,6 @@ for timestep in times_to_look_at:
     plt.tight_layout()
     plt.legend()
 
-
     figname = "forces_at_timestep_{}".format(timestep)
     filedir ="C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile/Beta/"
     if not os.path.isdir(filedir):
@@ -95,7 +101,6 @@ for timestep in times_to_look_at:
     plt.title("Time: {}".format(simulation_timeA))
     plt.tight_layout()
     plt.legend()
-
 
     figname = "forces_at_timestep_{}".format(timestep)
     filedir ="C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile/B/"

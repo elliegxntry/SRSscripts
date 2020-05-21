@@ -54,6 +54,7 @@ def plot_mdot_over_r(config, specs, raw_data_path, reduced_data_path, times, **k
         x1v = raw_data["x1v"]
         x2v = raw_data["x2v"]
         x3v = raw_data["x3v"]
+        print(x1v.shape)
 
         # don't need to load metric every time since the coords stay the same
         if metric is None:
@@ -101,7 +102,7 @@ if __name__ == '__main__':
     dist = "B"
     config = "1.1.1-torus2_b-gz2"
     specs = "a0beta500tor" + dist + "_br32x32x64rl2x2"
-    times = np.arange(0, 671)
+    times = np.arange(0, 1)
 
     raw_data_path = "C:/Users/Ellie/Downloads/nerd/SRSData/" + config + "_" + specs + "/"
     reduced_data_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/mdotAsR/Constant" + dist + "/"

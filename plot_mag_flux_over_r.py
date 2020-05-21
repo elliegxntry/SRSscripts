@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-sys.path.append('../modules/')
+sys.path.append('C:/Users/Ellie/Downloads/nerd/scripts/GRvis-master/modules/')
 from raw_data_utils import *
 from metric_utils import *
 from calculate_data_utils import *
