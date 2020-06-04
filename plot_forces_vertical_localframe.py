@@ -8,10 +8,10 @@ sys.path.append("C:/Users/Ellie/downloads/nerd/scripts/modules")
 import new_athena_read
 
 # specifications
-times_to_look_at = np.arange(0, 671)
+times_to_look_at = np.arange(0, 1)
 mag_force = False
-nonmag_force = True
-total_force = False
+nonmag_force = False
+total_force = True
 lines = True
 specific = True
 
@@ -30,6 +30,7 @@ quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity",
 
 # Calculate forces
 for timestep in times_to_look_at:
+    # load data
     timestep = "{:05d}".format(int(timestep))
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
@@ -52,11 +53,11 @@ for timestep in times_to_look_at:
     phi_index = 0; radius_index = 0; theta_indexB = int(pressdataB.shape[1] / 2)
 
     if nonmag_force:
-        dthetapressA = np.gradient(dataA['press'], dataA['x2v'], edge_order=2, axis=1)/r
-        dthetapressB = np.gradient(dataB['press'], dataB['x2v'], edge_order=2, axis=1)/r
+        dthetapressA = np.gradient(dataA['press'], dataA['x2v'], edge_order=2, axis=1)
+        dthetapressB = np.gradient(dataB['press'], dataB['x2v'], edge_order=2, axis=1)
 
-        pressforceA = 0.5 * (dthetapressA[phi_index, theta_indexA, :] + dthetapressA[phi_index, theta_indexA - 1, :])
-        pressforceB = 0.5 * (dthetapressB[phi_index, theta_indexB, :] + dthetapressB[phi_index, theta_indexB - 1, :])
+        pressforceA = - 0.5 * (dthetapressA[phi_index, theta_indexA, :] + dthetapressA[phi_index, theta_indexA - 1, :])
+        pressforceB = - 0.5 * (dthetapressB[phi_index, theta_indexB, :] + dthetapressB[phi_index, theta_indexB - 1, :])
 
     if mag_force:
         dthetapmagA = np.gradient(pmagdataA, dataA['x2v'], edge_order=2,
@@ -112,8 +113,8 @@ for timestep in times_to_look_at:
         dthetapressB = np.gradient(dataB['press'], dataB['x2v'], edge_order=2,
                                    axis=1) / r  # derivative of Bcc1 with respect to theta
 
-        pressforceA = 0.5 * (dthetapressA[phi_index, theta_indexA, :] + dthetapressA[phi_index, theta_indexA - 1, :])
-        pressforceB = 0.5 * (dthetapressB[phi_index, theta_indexB, :] + dthetapressB[phi_index, theta_indexB - 1, :])
+        pressforceA = - 0.5 * (dthetapressA[phi_index, theta_indexA, :] + dthetapressA[phi_index, theta_indexA - 1, :])
+        pressforceB = - 0.5 * (dthetapressB[phi_index, theta_indexB, :] + dthetapressB[phi_index, theta_indexB - 1, :])
 
         dthetapmagA = np.gradient(pmagdataA, dataA['x2v'], edge_order=2,
                                   axis=1)  # derivative of Bcc1 with respect to theta

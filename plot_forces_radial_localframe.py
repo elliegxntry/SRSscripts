@@ -1,4 +1,16 @@
-# Other Python modules
+"""
+This is the most useful forces script - mag tension is transformed to local frame
+script is mostly controlled by boolean operators
+calculates and plots the forces at each timestep
+INPUTS:
+    - Times to look at
+    - which forces to calculate and plot - mag, gas or total
+    - with lines at inner radius of torus and at max density or not
+    - limit plot to torus or not
+OUTPUTS:
+    - Plot with specified forces
+"""
+
 # import packages
 import sys
 import numpy as np
@@ -7,16 +19,15 @@ import os
 sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
 import new_athena_read
 
-## This is the most useful forces script - mag tension is GR and has good boolean usage
-
 # specifications
-times_to_look_at = np.arange(0, 1)
+times_to_look_at = np.arange(206, 671)
 mag_force = False
 nonmag_force = False
 total_force = True
 lines = True
-specific = True
+specific = False
 
+# path to load data - save paths at end of script
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 configA = "1.1.1-torus2_b-gz2_a0beta500torBeta_br32x32x64rl2x2"
 configB = "1.1.1-torus2_b-gz2_a0beta500torB_br32x32x64rl2x2"
@@ -31,10 +42,11 @@ quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity",
 
 #calculate forces at local frame for each timestep
 for timestep in times_to_look_at:
+    # get data from file
     timestep = "{:05d}".format(int(timestep))
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
-    #print("Loading time step {}".format(timestep))
+    print("Loading time step {}".format(timestep))
     dataA = new_athena_read.athdf(filepathA, quantities=quantities)
     dataB = new_athena_read.athdf(filepathB, quantities=quantities)
 
@@ -42,8 +54,6 @@ for timestep in times_to_look_at:
     simulation_timeA = dataA["Time"]
     simulation_timeB = dataB["Time"]
     r = dataA["x1v"]
-    print("r's shape:")
-    print(r.shape)
     theta = dataA["x2v"]
     pressdataA = dataA['press']
     pressdataB = dataB['press']
@@ -58,10 +68,6 @@ for timestep in times_to_look_at:
     if nonmag_force:
         drpressA = np.gradient(dataA['press'], r, edge_order=2, axis=2)
         drpressB = np.gradient(dataB['press'], r, edge_order=2, axis=2)
-        print("dtheta shape")
-        print(dthetapressA.shape)
-        print("gradient shape")
-        print(np.gradient(dataA['press'], theta, edge_order=2, axis=1).shape)
 
         pressforceA = - 0.5 * (drpressA[phi_index, theta_indexA, :] + drpressA[phi_index, theta_indexA - 1, :])
         pressforceB = - 0.5 * (drpressB[phi_index, theta_indexB, :] + drpressB[phi_index, theta_indexB - 1, :])
@@ -113,12 +119,14 @@ for timestep in times_to_look_at:
 
     # Repeats of the above calculations but all together
     if total_force:
+        # gas force
         drpressA = np.gradient(dataA['press'], dataA['x1v'], edge_order=2, axis=2)
         drpressB = np.gradient(dataB['press'], dataB['x1v'], edge_order=2, axis=2)
 
         pressforceA = - 0.5 * (drpressA[phi_index, theta_indexA, :] + drpressA[phi_index, theta_indexA - 1, :])
         pressforceB = - 0.5 * (drpressB[phi_index, theta_indexB, :] + drpressB[phi_index, theta_indexB - 1, :])
 
+        # mag forces
         pmag_radial_dataA = 0.5 * (pmagdataA[phi_index, theta_indexA, :] + pmagdataA[phi_index, theta_indexA - 1, :])
         pmag_radial_dataB = 0.5 * (pmagdataB[phi_index, theta_indexB, :] + pmagdataB[phi_index, theta_indexB - 1, :])
 
@@ -171,7 +179,7 @@ for timestep in times_to_look_at:
     #plot constant Beta
     plt.figure()
     if mag_force:
-        plt.plot(dataA['x1v'], pmagforceA, label = "Magnetic Pressure Force", linestyle="--", color='red')
+        plt.plot(dataA['x1v'], pmagforceA, label ="Magnetic Pressure Force", linestyle="--", color='red')
         plt.plot(dataA['x1v'], magtensionA, label="Magnetic Tension Force", linestyle="--", color='purple')
         plt.plot(dataA['x1v'], total_mag_forceA, label='Total Magnetic Force', linestyle=":", color='black')
         if lines:
@@ -329,7 +337,7 @@ for timestep in times_to_look_at:
             # print(filedir)
             # print("Saving figure " + filedir + figname)
             plt.savefig(filedir + figname)
-        plt.show()
+        #plt.show()
         plt.gca().clear()
         plt.close()
     if total_force:
@@ -349,6 +357,6 @@ for timestep in times_to_look_at:
             # print(filedir)
             # print("Saving figure " + filedir + figname)
             plt.savefig(filedir + figname)
-        plt.show()
+        #plt.show()
         plt.gca().clear()
         plt.close()

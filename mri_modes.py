@@ -1,9 +1,12 @@
-#!/usr/bin/env python
-# coding: utf-8
+"""
+
+"""
 
 # Import packages
 import numpy as np
 import os
+import sys
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules")
 import new_athena_read as read
 import matplotlib.pyplot as plt
 
@@ -14,12 +17,13 @@ quantity = 'Bcc1'
 dist = 'B'
 time_steps = np.arange(0, 671)
 wavelengths = None
+mstart = 1
+mend = 3
 
 # Paths to load and save data
 config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 data_load_path = datapath + config + "/"
-#print(data_load_path)
 data_save_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/Fourier/"
 if not os.path.isdir(data_save_path):
     os.mkdir(data_save_path)
@@ -27,11 +31,11 @@ figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/timemodes/" + dist + "/
 if not os.path.isdir(figsavepath):
     os.mkdir(figsavepath)
 amp_path = data_save_path + "fourier-amplitude-" + quantity + "_data_r{}.txt".format(radius)
-#print(amp_path)
+header = ""
 
 # Calculate modes for each timestep
 for time in time_steps:
-    header = ""
+    # load data
     fname = data_load_path + config + ".prim.{:05d}.athdf".format(time)
     #print("Loading time {}".format(time))
 
@@ -73,7 +77,7 @@ for time in time_steps:
 # clean up mdot by removing duplicates and sorting
 with open(amp_path, "r") as f:
     ampdata = np.loadtxt(f, skiprows=1)
-unique_times, inds = np.unique(ampdata[:,0], return_index=True)
+unique_times, inds = np.unique(ampdata[:, 0], return_index=True)
 sorted_ampdata = ampdata[inds]
 # new_ampdata = np.transpose(np.stack([unique_times, ampdata[:,1][inds], ampdata[:,2][inds], ampdata[:,3][inds]]))
 # print(new_ampdata.shape)
@@ -95,8 +99,6 @@ plt.tight_layout()
 
 # Plot several modes over time
 plt.figure()
-mstart = 1
-mend = 3
 # if N_phi is None: N_phi = 128
 # mend = N_phi//2 - 1
 num_plots = mend - mstart + 1

@@ -1,8 +1,25 @@
+"""
+Extracts growth rate of fourier transform from mri_modes.py and fits an exponential curve to the data
+INPUTS:
+    - Quantity (usually a bfield)
+    - radius
+    - mode to calculate and plot
+OUTPUTS:
+    - Plot of the data with a curve fit
+    - prints growth rate and covariance (in python and in title of plot)
+
+If line won't work/there's an error in size, try:
+    - adding a p0 variable (from print(param)) to the curve_fit function from a similar plot
+    - limit times
+    - add more here - google
+"""
+
 # Import packages
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import os
+import sys
 sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules")
 
 # Quantity dictionary
@@ -22,7 +39,6 @@ end = -1
 # Paths to load and save
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/Fourier/"
 fourier_path = "fourier-amplitude-" + quantity + "_data_r{}.txt".format(radius)
-datasavepath = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/"
 figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/mode_amplitudes/Constant" + dist + "/m" + str(m) + "/"
 figname = quantity + "m{}_r{}.png".format(m, radius)
 
@@ -30,7 +46,7 @@ figname = quantity + "m{}_r{}.png".format(m, radius)
 with open(datapath + fourier_path) as file:
     data = np.loadtxt(file, skiprows=1)
 
-# Define where to load data from in array
+# Define where to load data from in array and normalize times
 times = (data[:, 0])[start:end]
 norm_times = times / times[-1]
 const_amp = data[:, 1]
@@ -64,7 +80,7 @@ print(gamma)
 
 # Plot curve fit
 plt.plot(times, mN_amp, marker='+', ls="", color='blue', label='Data')
-plt.plot(times, fit, ls="--", color='red', label='Line of Best Fit')
+plt.plot(times, fit, ls="--", color='red', label='Best Fit')
 # plt.plot(norm_times, mN_amp, marker='+', ls="", color='blue', label='Data')
 # plt.plot(norm_times, fit, ls="--", color='red', label='Best Fit')
 plt.legend()
@@ -74,7 +90,7 @@ plt.xlabel("Time [GM/c^3]")
 plt.ylabel("Mode Amplitude [arbitrary units]")
 plt.title(title + values)
 if not os.path.isdir(figsavepath):
-    os.mkdir(figsavepath)
+    os.mkdirs(figsavepath)
 #print(figsavepath)
 #print(figname)
 plt.savefig(figsavepath + figname)

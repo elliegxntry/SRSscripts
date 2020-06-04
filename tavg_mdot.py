@@ -5,13 +5,16 @@ import os
 # Things to modify script - see if statements for times in chunks
 dist = "B"
 chunk1 = False
-chunk2 = False
+chunk2 = True
 chunk3 = False
 chunk4 = False
 chunk5 = False
 chunk6 = False
 chunk7 = False
-all_time = True
+all_time = False
+
+all_chunks = True
+only_one = False
 
 #pull the data and set up where to save it
 data_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/mdotAsR/Constant" + dist + "/"
@@ -88,7 +91,7 @@ plt.plot(tavg_mdot_over_r)
 plt.xlabel("Radius [GM/c^2]")
 plt.ylabel("Mass Flux [c^3/G]")
 plt.title("Time averaged mass flux" + "\n" + "Constant " + dist + "\n" + timestep_name)
-plt.xlim([0,20])
+plt.xlim([0, 20])
 plt.ylim([-0.05, 0])
 plt.tight_layout()
 fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/tavg_mdot/Constant" + dist + "/"
