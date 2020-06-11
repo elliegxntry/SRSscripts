@@ -1,10 +1,8 @@
 # import packages
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
-# Other Python modules
+import os
 import numpy as np
-
-# Athena++ modules
 from scripts import athena_read
 
 times = np.arange(0, 1)
@@ -111,9 +109,9 @@ for timestep in times:
 
     plt.colorbar(im)
 
-    # filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/" + quantity + "Slices/B/Sensitive/"
-    # if not os.path.isdir(filedir):
-      #  os.mkdir(filedir)
+    filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Slices/" + quantity + "Slices/B/Sensitive/"
+    if not os.path.isdir(filedir):
+      os.makedirs(filedir)
     #print(filedir)
     #plt.savefig(filedir + filename, bbox_inches='tight')
     plt.show()

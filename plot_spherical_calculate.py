@@ -168,7 +168,7 @@ for timestep in times:
 
     plt.colorbar(im)
 
-    filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/" + quantity
+    filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Slices/" + quantity
     if do_diff:
         filedir += "Diff"
     if do_average:

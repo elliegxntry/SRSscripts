@@ -20,7 +20,7 @@ datafileA = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/ConstantBeta/"
 datafileB = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/ConstantB/"
 mdot_pathA = datafileA + "mdot-data_r{}.txt".format(radius)
 mdot_pathB = datafileB + "mdot-data_r{}.txt".format(radius)
-filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/mdot_profiles/Comparison/"
+filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/mdot_profiles/Comparison/"
 
 # Read mdot file and define variables from file
 with open(mdot_pathA, "r") as file:

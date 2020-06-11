@@ -31,7 +31,7 @@ datapath_baseB = datapath + configB
 # path to save data
 filenameA = datapath_baseA + "/" + configA + ".hst"
 filenameB = datapath_baseB + "/" + configB + ".hst"
-fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/hstplots/"
+fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/hstplots/"
 if not os.path.isdir(fig_save_path):
     os.makedirs(fig_save_path)
 

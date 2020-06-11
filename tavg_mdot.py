@@ -94,7 +94,7 @@ plt.title("Time averaged mass flux" + "\n" + "Constant " + dist + "\n" + timeste
 plt.xlim([0, 20])
 plt.ylim([-0.05, 0])
 plt.tight_layout()
-fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/tavg_mdot/Constant" + dist + "/"
+fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/tavg_mdot/Constant" + dist + "/"
 if not os.path.isdir(fig_save_path):
     os.makedirs(fig_save_path)
 plt.savefig(fig_save_path + figname)

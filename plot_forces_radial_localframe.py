@@ -20,7 +20,7 @@ sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
 import new_athena_read
 
 # specifications
-times_to_look_at = np.arange(206, 671)
+times_to_look_at = np.arange(206, 207)
 mag_force = False
 nonmag_force = False
 total_force = True
@@ -210,7 +210,7 @@ for timestep in times_to_look_at:
     if mag_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/specific/Beta/mag/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/Beta/mag/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -218,7 +218,7 @@ for timestep in times_to_look_at:
             plt.savefig(filedir + figname)
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/Beta/mag/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/Beta/mag/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -230,7 +230,7 @@ for timestep in times_to_look_at:
     if nonmag_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/Beta/gas/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/Beta/gas/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -238,7 +238,7 @@ for timestep in times_to_look_at:
             plt.savefig(filedir + figname)
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/specific/Beta/gas/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/Beta/gas/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -250,7 +250,7 @@ for timestep in times_to_look_at:
     if total_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/specific/Beta/total/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/Beta/total/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -258,7 +258,7 @@ for timestep in times_to_look_at:
             plt.savefig(filedir + figname)
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/Beta/total/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/Beta/total/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -303,7 +303,7 @@ for timestep in times_to_look_at:
     if mag_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/specific/B/mag/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/B/mag/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -311,7 +311,7 @@ for timestep in times_to_look_at:
             plt.savefig(filedir + figname)
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/B/mag/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/B/mag/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -323,7 +323,7 @@ for timestep in times_to_look_at:
     if nonmag_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/specific/B/gas/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/B/gas/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -331,7 +331,7 @@ for timestep in times_to_look_at:
             plt.savefig(filedir + figname)
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/B/gas/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/B/gas/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -343,7 +343,7 @@ for timestep in times_to_look_at:
     if total_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/specific/B/total/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/B/total/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)
@@ -351,7 +351,7 @@ for timestep in times_to_look_at:
             plt.savefig(filedir + figname)
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile_local/B/total/"
+            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/B/total/"
             if not os.path.isdir(filedir):
                 os.makedirs(filedir)
             # print(filedir)

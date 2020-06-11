@@ -23,7 +23,7 @@ plt.plot(time_data, quantity_data, ls="", marker="*")
 plt.xlabel("Time [GM/c^3]")
 plt.ylabel(quantity)
 plt.title("Constant B at r{}".format(radius))
-filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/time_profiles/ConstantB/"
+filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/time_profiles/ConstantB/"
 if not os.path.isdir(filedir):
     os.mkdir(filedir)
 

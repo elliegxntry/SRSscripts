@@ -10,7 +10,7 @@ radius = 1.52
 # Path to load and save data
 datafile = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/"
 mdot_path = datafile + "mdot-data_r{}.txt".format(radius)
-filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/mdot_profiles/Constant" + dist + "/specific/"
+filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/mdot_profiles/Constant" + dist + "/specific/"
 
 with open(mdot_path,"r") as file:
     mdot_data = np.loadtxt(file, skiprows=1)

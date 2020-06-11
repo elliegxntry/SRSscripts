@@ -27,7 +27,7 @@ data_load_path = datapath + config + "/"
 data_save_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/Fourier/"
 if not os.path.isdir(data_save_path):
     os.mkdir(data_save_path)
-figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/timemodes/" + dist + "/"
+figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/timemodes/" + dist + "/"
 if not os.path.isdir(figsavepath):
     os.mkdir(figsavepath)
 amp_path = data_save_path + "fourier-amplitude-" + quantity + "_data_r{}.txt".format(radius)

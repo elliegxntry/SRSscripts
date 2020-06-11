@@ -1,7 +1,7 @@
 import numpy as np
 import sys
 #sys.path.append(".../scripts/modules/")
-sys.path.append('C:/Users/Ellie/Downloads/nerd/scripts/GRvis-master/modules/')
+sys.path.append('C:/Users/Ellie/Downloads/nerd/scripts/GRvis-master/scripts/modules/')
 from raw_data_utils import *
 from metric_utils import *
 from calculate_data_utils import *

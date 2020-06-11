@@ -57,7 +57,7 @@ for timestep in times_to_look_at:
 
     # save figure
     figname = quantity_to_load + "_at_timestep_{}".format(timestep)
-    filedir ="C:/Users/Ellie/Downloads/nerd/SRSProfiles/" + quantity_to_load + "_rprofile/"
+    filedir ="C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/" + quantity_to_load + "_rprofile/"
     if not os.path.isdir(filedir):
         os.mkdir(filedir)
     print(filedir)

@@ -17,7 +17,7 @@ dist = "B"
 
 # load paths
 data_load_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/mdotAsR/time/Constant" + dist + "/"
-fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/tavg_mdot/all_chunks/"
+fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/tavg_mdot/all_chunks/"
 if not os.path.isdir(fig_save_path):
     os.makedirs(fig_save_path)
 filestem = "time_mdot_over_r_"

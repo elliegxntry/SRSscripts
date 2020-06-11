@@ -47,7 +47,7 @@ for timestep in times_to_look_at:
     plt.tight_layout()
 
     figname = "v2b2corr_r{}".format(radius_in_codeunits) + "_at_timestep_{}".format(timestep)
-    filedir ="C:/Users/Ellie/Downloads/nerd/SRSProfiles/v2b2corr_thetaprofile_c01/"
+    filedir ="C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/v2b2corr_thetaprofile_c01/"
     if not os.path.isdir(filedir):
         os.mkdir(filedir)
     #print(filedir)

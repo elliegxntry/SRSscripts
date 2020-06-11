@@ -39,7 +39,7 @@ end = -1
 # Paths to load and save
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/Fourier/"
 fourier_path = "fourier-amplitude-" + quantity + "_data_r{}.txt".format(radius)
-figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/mode_amplitudes/Constant" + dist + "/m" + str(m) + "/"
+figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/mode_amplitudes/Constant" + dist + "/m" + str(m) + "/"
 figname = quantity + "m{}_r{}.png".format(m, radius)
 
 # Load fourier data

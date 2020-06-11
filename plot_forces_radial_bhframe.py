@@ -84,7 +84,7 @@ for timestep in times_to_look_at:
     plt.legend()
 
     figname = "forces_at_timestep_{}".format(timestep)
-    filedir ="C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile/Beta/"
+    filedir ="C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile/Beta/"
     if not os.path.isdir(filedir):
         os.mkdir(filedir)
     #print(filedir)
@@ -103,7 +103,7 @@ for timestep in times_to_look_at:
     plt.legend()
 
     figname = "forces_at_timestep_{}".format(timestep)
-    filedir ="C:/Users/Ellie/Downloads/nerd/SRSProfiles/forces_rprofile/B/"
+    filedir ="C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile/B/"
     if not os.path.isdir(filedir):
         os.mkdir(filedir)
     #print(filedir)
