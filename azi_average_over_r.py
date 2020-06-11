@@ -14,8 +14,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
-sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
-import new_athena_read
+sys.path.append('GRvis-master/scripts/modules/')
+from raw_data_utils import read_athdf
+
 
 # path to load data
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
@@ -25,14 +26,25 @@ datapath_baseA = datapath + configA
 datapath_baseB = datapath + configB
 
 # specifications
-times_to_look_at = np.arange(414, 671)
+times_to_look_at = np.arange(0, 671)
 quantity_to_load = "Bcc3"
 
 # dictionary for quantities
 quantities = ['rho', 'press', 'vel1', 'vel2', 'vel3', 'Bcc1', 'Bcc2', 'Bcc3']
-quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity", "vel2":"Theta velocity",
-                  "vel3":"Azimuthal velocity", "Bcc1":"Radial magnetic field", "Bcc2":"Theta magnetic field",
-                  "Bcc3":"Azimuthal magnetic field"}
+quantity_names = {"rho":r"$\rho(t)/\rho_{0,max}$", "press":"$P$", "vel1":"$v^1$", "vel2":"$v^2$",
+                  "vel3":"$v^3$", "Bcc1":"$B^1$", "Bcc2":"$B^2$",
+                  "Bcc3":"$B^3$"}
+
+initial_datapath_baseA = "C:/Users/Ellie/Downloads/nerd/SRSData/1.1.1-torus2_b-gz2_a0beta500torBeta_br32x32x64rl2x2/"
+initial_datapath_baseB = "C:/Users/Ellie/Downloads/nerd/SRSData/1.1.1-torus2_b-gz2_a0beta500torB_br32x32x64rl2x2/"
+initial_filenameA = "1.1.1-torus2_b-gz2_a0beta500torBeta_br32x32x64rl2x2.prim.00000.athdf"
+initial_filenameB = "1.1.1-torus2_b-gz2_a0beta500torB_br32x32x64rl2x2.prim.00000.athdf"
+
+# load initial data
+initial_dataA = read_athdf(initial_datapath_baseA + initial_filenameA, quantities=[quantity_to_load])
+quantity_maxA = np.max(initial_dataA[quantity_to_load])
+initial_dataB = read_athdf(initial_datapath_baseA + initial_filenameA, quantities=[quantity_to_load])
+quantity_maxB = np.max(initial_dataB[quantity_to_load])
 
 for timestep in times_to_look_at:
     # load data
@@ -40,8 +52,8 @@ for timestep in times_to_look_at:
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
     print("Loading timestep {}".format(timestep))
-    dataA = new_athena_read.athdf(filepathA, quantities=[quantity_to_load])
-    dataB = new_athena_read.athdf(filepathB, quantities=[quantity_to_load])
+    dataA = read_athdf(filepathA, quantities=[quantity_to_load])
+    dataB = read_athdf(filepathB, quantities=[quantity_to_load])
 
     # get variables from file
     simulation_timeA = dataA["Time"]
@@ -62,16 +74,16 @@ for timestep in times_to_look_at:
     radial_dataB = azi_avgB[theta_indexB, :]
 
     # plot azimuthal average
-    plt.plot(radial_valuesA, radial_dataA, label="Constant Beta", linestyle="--")
-    plt.plot(radial_valuesB, radial_dataB, label="Constant B")
+    plt.plot(radial_valuesA, radial_dataA/quantity_maxA, label="Constant Beta", linestyle="--")
+    plt.plot(radial_valuesB, radial_dataB/quantity_maxB, label="Constant B")
     plt.xlabel("Radius [GM/c^2]")
     plt.ylabel(quantity_names[quantity_to_load])
-    plt.title("Time: {}".format(simulation_timeA) + " GM/c^3")
+    plt.title("Time: {}".format(simulation_timeA) + " GM/c^3" + "\nNormalized to initial value")
     plt.legend()
 
     # save figure
     figname = quantity_to_load + "_at_timestep_{}".format(timestep)
-    filedir ="C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/" + quantity_to_load + "_rprofile_aziAverage/"
+    filedir ="C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/" + quantity_to_load + "_rprofile_aziAverage/normalized/"
     if not os.path.isdir(filedir):
         os.mkdir(filedir)
     #print(filedir)

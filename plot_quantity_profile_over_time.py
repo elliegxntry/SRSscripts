@@ -3,18 +3,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
-sys.path.append('GRvis-master/modules/')
+sys.path.append('GRvis-master/scripts/modules/')
 from raw_data_utils import read_athdf
 
 #specifications
 radius = 10
-quantity = "rho"
+quantity = "press"
 dist = "B"
 
 quantities = ['rho', 'press', 'vel1', 'vel2', 'vel3', 'Bcc1', 'Bcc2', 'Bcc3']
-quantity_names = {"rho":r"$\rho(t)/\rho_{0,max}$", "press":"$P$", "vel1":"$v^1$", "vel2":"Theta velocity",
-                  "vel3":"Azimuthal velocity", "Bcc1":"$B^1", "Bcc2":"$B^2$",
-                  "Bcc3":"Azimuthal magnetic field"}
+quantity_names = {"rho":r"$\rho(t)/\rho_{0,max}$", "press":"$P$", "vel1":"$v^1$", "vel2":"$v^2$",
+                  "vel3":"$v^3$", "Bcc1":"$B^1$", "Bcc2":"$B^2$",
+                  "Bcc3":"$B^3$"}
 
 initial_data_path = "C:/Users/Ellie/Downloads/nerd/SRSData/1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2/"
 initial_filename = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2.prim.00000.athdf"
