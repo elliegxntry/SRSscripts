@@ -62,7 +62,7 @@ for timestep in times_to_look_at:
     if not os.path.isdir(filedir):
         os.mkdir(filedir)
     #print(filedir)
-    #print("Saving figure " + filedir + figname)
+    print("Saving figure " + filedir + figname)
     plt.savefig(filedir + figname)
     plt.show()
     plt.gca().clear()
