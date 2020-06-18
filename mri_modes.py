@@ -1,5 +1,16 @@
 """
-
+This script extracts the magnetic modes from each direction of the magnetic field by doing an fft.
+Also includes plots of the first mode with specs and a plot of every mode calculated on the same plot
+INPUTS:
+    - Radius
+    - Quantity (which direction of mag field)
+    - distribution
+    - time steps to run
+    - which modes to calculate
+OUTPUTS:
+    - A .txt file with the frequency each mode appears for every timestep
+    - A plot of the m1 frequencies over time
+    - A plot of every mode calculated over time as lines
 """
 
 # Import packages

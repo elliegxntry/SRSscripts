@@ -15,15 +15,15 @@ quantities_to_load = ['vel2', 'Bcc2']
 
 # dictionary for quantities
 quantities = ['rho', 'press', 'vel1', 'vel2', 'vel3', 'Bcc1', 'Bcc2', 'Bcc3']
-quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity", "vel2":"Theta velocity",
-                  "vel3":"Azimuthal velocity", "Bcc1":"Radial magnetic field", "Bcc2":"Theta magnetic field",
-                  "Bcc3":"Azimuthal magnetic field"}
+quantity_names = {"rho": "Density", "press": "Pressure", "vel1": "Radial velocity", "vel2": "Theta velocity",
+                  "vel3": "Azimuthal velocity", "Bcc1": "Radial magnetic field", "Bcc2": "Theta magnetic field",
+                  "Bcc3": "Azimuthal magnetic field"}
 
 for timestep in times_to_look_at:
     timestep = "{:05d}".format(int(timestep))
     filepath = datapath_base + "/" + config + ".prim." + timestep + ".athdf"
     print("Loading time step {}".format(timestep))
-    data = athena_read.athdf(filepath, quantities=quantities_to_load)
+    data = new_athena_read.athdf(filepath, quantities=quantities_to_load)
 
     # get variables
     simulation_time = data["Time"]

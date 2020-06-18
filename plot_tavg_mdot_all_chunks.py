@@ -44,7 +44,8 @@ chunk7_mean = np.mean(chunk7, axis=0)
 
 # plot chunks
 plt.figure()
-#plt.colormaps('viridis')
+colormap = plt.cm.plasma
+plt.gca().set_prop_cycle(plt.cycler('color', plt.cm.plasma(np.linspace(0, 8))))
 plt.plot(chunk1_mean, label="t=0 GM/c^3 to t=500 GM/c^3")
 plt.plot(chunk2_mean, label="t=500 GM/c^3 to t=1000 GM/c^3")
 plt.plot(chunk3_mean, label="t=1000 GM/c^3 to t=1500 GM/c^3")
@@ -55,10 +56,10 @@ plt.plot(chunk7_mean, label="t=3000 GM/c^3 to t=3350 GM/c^3")
 plt.xlabel("Radius [GM/c^2]")
 plt.ylabel("Mass Flux [c^3/G]")
 plt.legend()
-plt.xlim([0,20])
-plt.ylim([-0.012, -0.002])
 plt.title("Time averaged mass flux over different time intervals" + "\n" + "Constant " + dist)
 plt.tight_layout()
-#plt.savefig(fig_save_path + "Constant" + dist)
+
+# save figure
+plt.savefig(fig_save_path + "Constant" + dist)
 plt.show()
 plt.close()

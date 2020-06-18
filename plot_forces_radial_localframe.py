@@ -36,9 +36,8 @@ datapath_baseB = datapath + configB
 
 # dictionary for quantities necessary
 quantities = ['press', 'Bcc1', 'Bcc2', 'Bcc3']
-quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity", "vel2":"Theta velocity",
-                  "vel3":"Azimuthal velocity", "Bcc1":"Radial magnetic field", "Bcc2":"Theta magnetic field",
-                  "Bcc3":"Azimuthal magnetic field"}
+quantity_names = {"press":"$P$", "Bcc1":"$B^1$", "Bcc2":"$B^2$",
+                  "Bcc3":"$B^3$"}
 
 #calculate forces at local frame for each timestep
 for timestep in times_to_look_at:

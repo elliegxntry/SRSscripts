@@ -17,17 +17,17 @@ sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules")
 import new_athena_read as read
 
 # Specifications
-dist = "Beta"
+dist = "B"
 radius = 10
-quantity = 'rho'
-time_steps = np.arange(0, 448)
+quantity = 'press'
+time_steps = np.arange(0, 671)
 
 # Paths to pull and save
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
 datapath_base = datapath + config
 data_load_path = datapath_base + config + "/"
-data_save_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/"
+data_save_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2/"
 save_path = data_save_path + quantity + "-data_r{}.txt".format(radius)
 
 # additional specs that aren't usually changed (arbitrary phi, calculated at the midplane)
@@ -61,4 +61,3 @@ unique_times, inds = np.unique(data[:,0], return_index=True)
 new_data = np.transpose(np.stack([unique_times, data[:,1][inds]]))
 with open(save_path, "w") as f:
     np.savetxt(f, new_data, header="time, " + quantity)
-

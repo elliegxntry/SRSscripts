@@ -37,9 +37,9 @@ start = 0
 end = -1
 
 # Paths to load and save
-datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/Fourier/"
+datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2/Fourier/"
 fourier_path = "fourier-amplitude-" + quantity + "_data_r{}.txt".format(radius)
-figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/mode_amplitudes/Constant" + dist + "/m" + str(m) + "/"
+figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/mode_amplitudes/normalized/Constant" + dist + "/m" + str(m) + "/"
 figname = quantity + "m{}_r{}.png".format(m, radius)
 
 # Load fourier data
@@ -59,7 +59,7 @@ def exponential(norm_times, amp, gamma, shift, offset):
 
 # Using the curve_fit function, calculate the equation for the exponential growth
     # param is gamma/the rate of growth, param_cov is the accuracy/covariance of the estimate
-param, param_cov = curve_fit(exponential, norm_times, mN_amp, p0=[1.32786845e-11, 1.69920332e+01, 6.37176322e+00, 1.87400919e-09])
+param, param_cov = curve_fit(exponential, norm_times, mN_amp, p0=[7.33939620e-07, 5.74075442e+00,  8.00883882e+00, -2.08725189e-09])
 print("amp = " + str(param[0]))
 print("shift = " + str(param[2]))
 print("offset = " + str(param[3]))
@@ -79,10 +79,10 @@ print("Gamma: ")
 print(gamma)
 
 # Plot curve fit
-plt.plot(times, mN_amp, marker='+', ls="", color='blue', label='Data')
-plt.plot(times, fit, ls="--", color='red', label='Best Fit')
-# plt.plot(norm_times, mN_amp, marker='+', ls="", color='blue', label='Data')
-# plt.plot(norm_times, fit, ls="--", color='red', label='Best Fit')
+#plt.plot(times, mN_amp, marker='+', ls="", color='blue', label='Data')
+#plt.plot(times, fit, ls="--", color='red', label='Best Fit')
+plt.plot(norm_times, mN_amp, marker='+', ls="", color='blue', label='Data')
+plt.plot(norm_times, fit, ls="--", color='red', label='Best Fit')
 plt.legend()
 title = "Constant " + dist + " Mode m{} Amplitude".format(m) + "\nRadius: {}".format(radius) + "\n" + quantity_names[quantity]
 values = "\nNormalized best fit growth rate: {:.2f}".format(norm_gamma) + "\nActual best fit growth rate: {:.2E} [c^3/GM]".format(gamma)
@@ -90,7 +90,7 @@ plt.xlabel("Time [GM/c^3]")
 plt.ylabel("Mode Amplitude [arbitrary units]")
 plt.title(title + values)
 if not os.path.isdir(figsavepath):
-    os.mkdirs(figsavepath)
+    os.makedirs(figsavepath)
 #print(figsavepath)
 #print(figname)
 plt.savefig(figsavepath + figname)

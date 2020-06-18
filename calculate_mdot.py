@@ -14,7 +14,7 @@ OUTPUTS:
 import numpy as np
 import os
 import sys
-sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules")
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
 import new_athena_read as read
 from kerrmetric import kerr,fourvector
 
@@ -28,7 +28,7 @@ datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
 datapath_base = datapath + config
 data_load_path = datapath_base + config + "/"
-data_save_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/Constant" + dist + "/"
+data_save_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2/"
 mdot_path = data_save_path + "mdot-data_r{}.txt".format(radius)
 header = ""
 

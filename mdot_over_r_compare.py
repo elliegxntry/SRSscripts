@@ -16,8 +16,8 @@ import os
 radius = 1.52
 
 # Path to load and save data from
-datafileA = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/ConstantBeta/"
-datafileB = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/ConstantB/"
+datafileA = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/1.1.1-torus2_b-gz2_a0beta500torBeta_br32x32x64rl2x2/"
+datafileB = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/1.1.1-torus2_b-gz2_a0beta500torB_br32x32x64rl2x2/"
 mdot_pathA = datafileA + "mdot-data_r{}.txt".format(radius)
 mdot_pathB = datafileB + "mdot-data_r{}.txt".format(radius)
 filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/mdot_profiles/Comparison/"
@@ -46,8 +46,6 @@ if not os.path.isdir(filedir):
 
 # save file
 filename = "mdot_r{}.png".format(radius)
-#print(filename)
-#print(filedir)
 plt.savefig(filedir + filename)
 plt.show()
 plt.close()

@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
-sys.path.append('GRvis-master/scripts/modules/')
+sys.path.append('GRvis/scripts/modules/')
 from raw_data_utils import read_athdf
 
 
@@ -83,7 +83,8 @@ for timestep in times_to_look_at:
 
     # save figure
     figname = quantity_to_load + "_at_timestep_{}".format(timestep)
-    filedir ="C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/" + quantity_to_load + "_rprofile_aziAverage/normalized/"
+    filedir ="C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/"
+    filedir += quantity_to_load + "_rprofile_aziAverage/normalized/"
     if not os.path.isdir(filedir):
         os.mkdir(filedir)
     #print(filedir)
