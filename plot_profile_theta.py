@@ -2,9 +2,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-
-# Athena++ modules
-from scripts import athena_read
+import sys
+sys.path.append('GRvis/scripts/modules/')
+from raw_data_utils import read_athdf
 
 # paths to load data
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
@@ -27,8 +27,8 @@ for timestep in times_to_look_at:
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
     #print("Loading time step {}".format(timestep))
-    dataA = athena_read.athdf(filepathA, quantities=[quantity_to_load])
-    dataB = athena_read.athdf(filepathB, quantities=[quantity_to_load])
+    dataA = read_athdf(filepathA, quantities=[quantity_to_load])
+    dataB = read_athdf(filepathB, quantities=[quantity_to_load])
 
     # define variables
     simulation_timeA = dataA["Time"]

@@ -20,12 +20,12 @@ sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
 import new_athena_read
 
 # specifications
-times_to_look_at = np.arange(206, 207)
-mag_force = False
+times_to_look_at = np.arange(671, 902)
+mag_force = True
 nonmag_force = False
-total_force = True
-lines = True
-specific = False
+total_force = False
+lines = False
+specific = True
 
 # path to load data - save paths at end of script
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"

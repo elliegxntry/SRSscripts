@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import os
 
 # specifications
-variable_name = "mass"
+variable_name = "total_energy"
 
 # path to load data
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
@@ -37,39 +37,43 @@ if not os.path.isdir(fig_save_path):
 
 data_valuesA = np.loadtxt(filenameA, skiprows=2)
 time_valuesA = data_valuesA[:, 0]
-time_shape = time_valuesA.shape
-mass_valuesA = data_valuesA[:, 2].reshape(time_shape)
-rad_mom_values_A = data_valuesA[:, 3]
-theta_mom_values_A = data_valuesA[:, 4]
-phi_mom_values_A = data_valuesA[:, 5]
-rad_KE_values_A = data_valuesA[:, 6]
-theta_KE_values_A = data_valuesA[:, 7]
-phi_KE_values_A = data_valuesA[:, 8]
-total_energy_values_A = data_valuesA[:, 9]
-rad_ME_values_A = data_valuesA[:, 10]
-theta_ME_values_A = data_valuesA[:, 11]
-phi_ME_values_A = data_valuesA[:, 12]
+#time_shape = time_valuesA.shape
+#print(time_valuesA)
+mass_valuesA = data_valuesA[:, 2]#.reshape(time_shape)
+#print(mass_valuesA)
+rad_mom_valuesA = data_valuesA[:, 3]
+theta_mom_valuesA = data_valuesA[:, 4]
+phi_mom_valuesA = data_valuesA[:, 5]
+rad_KE_valuesA = data_valuesA[:, 6]
+theta_KE_valuesA = data_valuesA[:, 7]
+phi_KE_valuesA = data_valuesA[:, 8]
+total_energy_valuesA = data_valuesA[:, 9]
+rad_ME_valuesA = data_valuesA[:, 10]
+theta_ME_valuesA = data_valuesA[:, 11]
+phi_ME_valuesA = data_valuesA[:, 12]
 
 data_valuesB = np.loadtxt(filenameB, skiprows=2)
 time_valuesB = data_valuesB[:, 0]
 mass_valuesB = data_valuesB[:, 2]
-rad_mom_values_B = data_valuesB[:, 3]
-theta_mom_values_B = data_valuesB[:, 4]
-phi_mom_values_B = data_valuesB[:, 5]
-rad_KE_values_B = data_valuesB[:, 6]
-theta_KE_values_B = data_valuesB[:, 7]
-phi_KE_values_B = data_valuesB[:, 8]
-total_energy_values_B = data_valuesB[:, 9]
-rad_ME_values_B = data_valuesB[:, 10]
-theta_ME_values_B = data_valuesB[:, 11]
-phi_ME_values_B = data_valuesB[:, 12]
+rad_mom_valuesB = data_valuesB[:, 3]
+theta_mom_valuesB = data_valuesB[:, 4]
+phi_mom_valuesB = data_valuesB[:, 5]
+rad_KE_valuesB = data_valuesB[:, 6]
+theta_KE_valuesB = data_valuesB[:, 7]
+phi_KE_valuesB = data_valuesB[:, 8]
+total_energy_valuesB = data_valuesB[:, 9]
+rad_ME_valuesB = data_valuesB[:, 10]
+theta_ME_valuesB = data_valuesB[:, 11]
+phi_ME_valuesB = data_valuesB[:, 12]
 
-plt.plot(time_valuesA, mass_valuesA, label="Constant Beta")
-plt.plot(time_valuesB, mass_valuesB, label="Constant B")
+plt.plot(time_valuesA, total_energy_valuesA, label="Constant Beta", color="r")
+plt.plot(time_valuesB, total_energy_valuesB, label="Constant B", color="b")
 plt.yscale("log")
 plt.xlabel("Time [GM/c^3]")
-plt.ylabel(variable_name)
+plt.title("Volumetrically averaged total energy over time")
+plt.ylabel("Total Energy")
 figname = "vavg_" + variable_name
 plt.legend()
+plt.tight_layout()
 plt.savefig(fig_save_path + figname)
 plt.show()

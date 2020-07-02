@@ -1,22 +1,43 @@
+"""
+This script plots slices of different variables. Adapted from the athena++ script.
+INPUTS:
+    - times to plot
+    - initial distribution
+    - quantity to create
+    - whether to plot the midplane or a vertical slice
+    - if to average or not
+    - if to do a logarithmic color bar
+    - radius limits
+    - colormap to use
+    - colorbar limits
+OUTPUTS:
+    - slice of desired quantity at each timestep
+
+1.5 for vmax rho
+"""
+
 # import packages
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import os
 import numpy as np
-from scripts import athena_read
+import sys
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
+import new_athena_read
 
-times = np.arange(0, 1)
-dist = "Beta"
-quantity = "rho"
-do_midplane = True
+# specifications
+times = np.arange(448, 902)
+dist = "B"
+quantity = "press"
+do_midplane = False
 do_average = False
-color_log = False
-r_max = 15
+color_log = True
+r_max = 20
 xlims = [-r_max, r_max]
 ylims = [-r_max, r_max]
 cmap = "viridis"
-vmin = 1e0
-vmax = -1e-3
+vmin = None
+vmax = None
 
 # load data
 sim_str = "Constant_" + dist + "_"
@@ -24,21 +45,22 @@ config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
 data_file = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 datapath_base = data_file + config
 
+# for loop for each timestep
 for timestep in times:
+    # load file
     timestep = "{:05d}".format(int(timestep))
     filepath = datapath_base + "/" + config + ".prim." + timestep + ".athdf"
     print("Loading time step {}".format(timestep))
-
-    # Main function
     filename = sim_str + quantity + "_" + timestep
 
+    # find theta values
     def theta_func(xmin, xmax, _, nf):
         x2_vals = np.linspace(xmin, xmax, nf)
         theta_vals = x2_vals + (1.0 - h) / 2.0 * np.sin(2.0 * x2_vals)
         return theta_vals
 
     # Read data
-    data = athena_read.athdf(filepath, quantities=[quantity])
+    data = new_athena_read.athdf(filepath, quantities=[quantity])
 
     # Extract basic coordinate information
     coordinates = data['Coordinates']
@@ -85,7 +107,6 @@ for timestep in times:
         vals = np.vstack((vals_right, vals_left[::-1, :]))
 
     # Determine colormapping properties
-
     if color_log:
         norm = colors.LogNorm()
     else:
@@ -95,7 +116,6 @@ for timestep in times:
     plt.figure()
     plt.title("Constant " + dist + ": " + quantity + " at timestep " + timestep)
     im = plt.pcolormesh(x_grid, y_grid, vals, cmap=cmap, vmin=vmin, vmax=vmax, norm=norm)
-
     plt.gca().set_aspect('equal')
     plt.xlim(xlims)
     plt.ylim(ylims)
@@ -109,10 +129,10 @@ for timestep in times:
 
     plt.colorbar(im)
 
-    filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Slices/" + quantity + "Slices/B/Sensitive/"
+    filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Slices/" + quantity + "Slices/" + dist + "/"#Sensitive/"
     if not os.path.isdir(filedir):
       os.makedirs(filedir)
-    #print(filedir)
-    #plt.savefig(filedir + filename, bbox_inches='tight')
-    plt.show()
+    print(filedir)
+    plt.savefig(filedir + filename, bbox_inches='tight')
+    #plt.show()
     plt.close()

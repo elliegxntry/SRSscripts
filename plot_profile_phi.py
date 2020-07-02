@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
-sys.path.append('GRvis-master/scripts/modules/')
+sys.path.append('GRvis/scripts/modules/')
 from raw_data_utils import read_athdf
 
 # path to load data
@@ -14,14 +14,14 @@ datapath_baseA = datapath + configA
 datapath_baseB = datapath + configB
 
 # Specifications
-times_to_look_at = np.arange(0, 10)
-quantity_to_load = "rho"
+times_to_look_at = np.arange(0, 902)
+quantity_to_load = "press"
 
 # dictionary for quantities
 quantities = ['rho', 'press', 'vel1', 'vel2', 'vel3', 'Bcc1', 'Bcc2', 'Bcc3']
-quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity", "vel2":"Theta velocity",
-                  "vel3":"Azimuthal velocity", "Bcc1":"Radial magnetic field", "Bcc2":"Theta magnetic field",
-                  "Bcc3":"Azimuthal magnetic field"}
+quantity_names = {"rho":r"$\rho(t)/\rho_{0,max}$", "press":"$P$", "vel1":"$v^1$", "vel2":"$v^2$",
+                  "vel3":"$v^3$", "Bcc1":"$B^1$", "Bcc2":"$B^2$",
+                  "Bcc3":"$B^3$"}
 
 initial_datapath_baseA = "C:/Users/Ellie/Downloads/nerd/SRSData/1.1.1-torus2_b-gz2_a0beta500torBeta_br32x32x64rl2x2/"
 initial_datapath_baseB = "C:/Users/Ellie/Downloads/nerd/SRSData/1.1.1-torus2_b-gz2_a0beta500torB_br32x32x64rl2x2/"
@@ -39,7 +39,7 @@ for timestep in times_to_look_at:
     timestep = "{:05d}".format(int(timestep))
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
-    #print("Loading time step {}".format(timestep))
+    print("Loading time step {}".format(timestep))
     dataA = read_athdf(filepathA, quantities=[quantity_to_load])
     dataB = read_athdf(filepathB, quantities=[quantity_to_load])
 
@@ -78,5 +78,5 @@ for timestep in times_to_look_at:
     #print(filedir)
     #print("Saving figure " + filedir + figname)
     plt.savefig(filedir + figname)
-    plt.show()
+    #plt.show()
     plt.gca().clear()

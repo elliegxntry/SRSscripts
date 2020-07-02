@@ -14,7 +14,7 @@ import numpy as np
 import os
 
 # Specifications
-dist = "Beta"
+dist = "B"
 radius = 1.52
 
 # Path to load and save data
@@ -30,7 +30,7 @@ with open(mdot_path, "r") as file:
 # Plot data
 plt.figure()
 plt.plot(times, mdot, ls="", marker="*")
-plt.gca().axhline(0, ls="--", color="black")
+#plt.gca().axhline(0, ls="--", color="black")
 plt.xlabel("Time [GM/c^3]")
 plt.ylabel("Mass Flux [c^3/G]")
 plt.title("Constant " + dist + " Mass Flux through r{}".format(radius))

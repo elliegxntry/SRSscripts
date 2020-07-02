@@ -2,9 +2,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-
-# Athena++ modules
-from scripts import athena_read
+import sys
+sys.path.append('GRvis/scripts/modules/')
+from raw_data_utils import read_athdf
 
 # paths to load data
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
@@ -18,17 +18,17 @@ quantity_to_load = "vel2"
 
 # dictionary for quantities
 quantities = ['rho', 'press', 'vel1', 'vel2', 'vel3', 'Bcc1', 'Bcc2', 'Bcc3']
-quantity_names = {"rho":"Density", "press":"Pressure", "vel1":"Radial velocity", "vel2":"Theta velocity",
-                  "vel3":"Azimuthal velocity", "Bcc1":"Radial magnetic field", "Bcc2":"Theta magnetic field",
-                  "Bcc3":"Azimuthal magnetic field"}
+quantity_names = {"rho":r"$\rho(t)/\rho_{0,max}$", "press":"$P$", "vel1":"$v^1$", "vel2":"$v^2$",
+                  "vel3":"$v^3$", "Bcc1":"$B^1$", "Bcc2":"$B^2$",
+                  "Bcc3":"$B^3$"}
 
 for timestep in times_to_look_at:
     timestep = "{:05d}".format(int(timestep))
     filepathA = datapath_baseA + "/" + configA + ".prim." + timestep + ".athdf"
     filepathB = datapath_baseB + "/" + configB + ".prim." + timestep + ".athdf"
     print("Loading time step {}".format(timestep))
-    dataA = athena_read.athdf(filepathA, quantities=[quantity_to_load])
-    dataB = athena_read.athdf(filepathB, quantities=[quantity_to_load])
+    dataA = read_athdf(filepathA, quantities=[quantity_to_load])
+    dataB = read_athdf(filepathB, quantities=[quantity_to_load])
 
     # Get variables
     simulation_timeA = dataA["Time"]
