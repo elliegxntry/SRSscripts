@@ -37,13 +37,14 @@ start = 0
 end = -1
 
 # Paths to load and save
-datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2/Fourier/"
+datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/"
+config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2/"
 fourier_path = "fourier-amplitude-" + quantity + "_data_r{}.txt".format(radius)
-figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/mode_amplitudes/normalized/Constant" + dist + "/m" + str(m) + "/"
+figsavepath = "C:/Users/Ellie/Downloads/nerd/SRSPlots/" + config + "/mode_amplitudes/normalized/Constant" + dist + "/m" + str(m) + "/"
 figname = quantity + "m{}_r{}.png".format(m, radius)
 
 # Load fourier data
-with open(datapath + fourier_path) as file:
+with open(datapath + config + "Fourier/" + fourier_path) as file:
     data = np.loadtxt(file, skiprows=1)
 
 # Define where to load data from in array and normalize times

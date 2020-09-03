@@ -19,9 +19,9 @@ import new_athena_read as read
 from kerrmetric import kerr,fourvector
 
 # Specifications
-dist = "B"
+dist = "Beta"
 radius = 1.52
-time_steps = np.arange(902, 1110)
+time_steps = np.arange(900, 1211)
 
 # Paths to load and save
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"

@@ -16,11 +16,12 @@ quantity_names = {"rho":r"$\rho(t)/\rho_{0,max}$", "press":"$P$", "vel1":"$v^1$"
                   "vel3":"$v^3$", "Bcc1":"$B^1$", "Bcc2":"$B^2$",
                   "Bcc3":"$B^3$"}
 
-initial_data_path = "C:/Users/Ellie/Downloads/nerd/SRSData/1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2/"
-initial_filename = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2.prim.00000.athdf"
+initial_data_path = "C:/Users/Ellie/Downloads/nerd/SRSData/"
+config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
+initial_filename = config + ".prim.00000.athdf"
 
 #load initial data
-initial_data = read_athdf(initial_data_path + initial_filename, quantities=[quantity])
+initial_data = read_athdf(initial_data_path + config + "/" + initial_filename, quantities=[quantity])
 quantity_max = np.max(initial_data[quantity])
 print(quantity_max)
 
@@ -42,7 +43,7 @@ plt.plot(time_data, quantity_data/quantity_max, ls="", marker="*")
 plt.xlabel("Time [GM/c^3]")
 plt.ylabel(quantity_names[quantity])
 plt.title("Constant " + dist +" at r{}".format(radius) + "\nNormalized to initial maximum value")
-filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/time_profiles/ConstantB/normalized/"
+filedir = "C:/Users/Ellie/Downloads/nerd/SRSProfiles/" + config + "time_profiles/normalized/"
 if not os.path.isdir(filedir):
     os.makedirs(filedir)
 

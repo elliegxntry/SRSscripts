@@ -1,6 +1,6 @@
 # import packages
 import sys
-sys.path.append("C:/Users/Ellie/Downloads/nerd/athena-public-version/vis/python/modules")
+sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules")
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import kerrmetric as kerr
@@ -9,14 +9,14 @@ import os
 import new_athena_read
 
 # specifications
-times = np.arange(0, 671)
-dist = "Beta"
-quantity = "vel1"
+times = np.arange(0, 1189)
+dist = "B"
+quantity = "vel3"
 do_vertical = False
 do_diff = True
 do_average = False
 color_log = False
-r_max = 15
+r_max = 20
 xlims = [-r_max, r_max]
 ylims = [-r_max, r_max]
 cmap = "RdBu"
@@ -53,15 +53,15 @@ def get_calculated_data(data_in, calc_q):
 if do_diff:
     datat0_name = data_file + config + "/" + config + ".prim.00000.athdf"
     if quantity in raw_quantities:
-        datat0 = athena_read.athdf(datat0_name, quantities=[quantity])
+        datat0 = new_athena_read.athdf(datat0_name, quantities=[quantity])
     elif quantity in calc_quantities:
-        datat0 = athena_read.athdf(datat0_name, quantities=raw_quantities)
+        datat0 = new_athena_read.athdf(datat0_name, quantities=raw_quantities)
         datat0 = get_calculated_data(datat0, quantity)
 
 for timestep in times:
     timestep = "{:05d}".format(int(timestep))
     filepath = datapath_base + "/" + config + ".prim." + timestep + ".athdf"
-    #print("Loading time step {}".format(timestep))
+    print("Loading time step {}".format(timestep))
 
     # Main function
     filename = sim_str + quantity
@@ -69,16 +69,11 @@ for timestep in times:
         filename += "_diff"
     filename += "_" + timestep
 
-    def theta_func(xmin, xmax, _, nf):
-        x2_vals = np.linspace(xmin, xmax, nf)
-        theta_vals = x2_vals + (1.0 - h) / 2.0 * np.sin(2.0 * x2_vals)
-        return theta_vals
-
     if quantity in raw_quantities:
         # Read data
-        data = athena_read.athdf(filepath, quantities=[quantity])
+        data = new_athena_read.athdf(filepath, quantities=[quantity])
     elif quantity in calc_quantities:
-        data = athena_read.athdf(filepath, quantities=raw_quantities)
+        data = new_athena_read.athdf(filepath, quantities=raw_quantities)
         data = get_calculated_data(data, quantity)
     # Extract basic coordinate information
     coordinates = data['Coordinates']
@@ -168,7 +163,7 @@ for timestep in times:
 
     plt.colorbar(im)
 
-    filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Slices/" + quantity
+    filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/" + config + "/Slices/" + quantity
     if do_diff:
         filedir += "Diff"
     if do_average:
@@ -177,10 +172,11 @@ for timestep in times:
         filedir += "Vertical"
     else:
         filedir += "Midplane"
-    filedir += "Slices/" + dist + "/"
+    filedir += "Slices/"
     if not os.path.isdir(filedir):
         os.makedirs(filedir)
     #print(filedir)
     plt.savefig(filedir + filename, bbox_inches='tight')
-    plt.show()
+    #plt.show()
     plt.close()
+print(quantity)

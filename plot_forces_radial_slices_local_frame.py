@@ -1,5 +1,13 @@
 """
-does both midplane and vertical
+Plots both vertical and midplane slices for each type of force
+INPUTS:
+    - Time steps
+    - distribution
+    - midplane or vertical
+    - which force to do (mag tension, mag pressure, gas pressure)
+    - plot specifics
+OUTPUT:
+    - plot for each timestep of the force
 """
 
 # import packages
@@ -9,9 +17,9 @@ import os
 import numpy as np
 from modules import new_athena_read
 
-times = np.arange(0, 1)
-dist = "Beta"
-do_midplane = True
+times = np.arange(902, 1189)
+dist = "B"
+do_midplane = False
 do_average = False
 color_log = False
 r_max = 20
@@ -26,8 +34,8 @@ cmap = "viridis"
 vmin = None
 vmax = None
 gas_press = False
-mag_press = False
-mag_tension = True
+mag_press = True
+mag_tension = False
 
 
 # load data
@@ -35,9 +43,9 @@ sim_str = "Constant_" + dist + "_"
 config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2"
 data_file = "C:/Users/Ellie/Downloads/nerd/SRSData/"
 datapath_base = data_file + config
-title_string = "Constant " + dist + "\n"
 
 for timestep in times:
+    title_string = "Constant " + dist + "\n"
     timestep = "{:05d}".format(int(timestep))
     filepath = datapath_base + "/" + config + ".prim." + timestep + ".athdf"
     print("Loading time step {}".format(timestep))
@@ -54,7 +62,7 @@ for timestep in times:
         orientation = "Midplane"
         # Read data
         data = new_athena_read.athdf(filepath, j_min=theta_ind-1, j_max=theta_ind+2)
-        print(data['rho'].shape)
+        #print(data['rho'].shape)
 
         # Extract basic coordinate information
         coordinates = data['Coordinates']
@@ -69,7 +77,7 @@ for timestep in times:
         nx2 = len(theta_vals)
         nx3 = len(phi_vals)
 
-        title_string += 'Midplane slice at theta={:.2f} (index={:d})\n'.format(theta_vals[1], theta_ind)
+
 
         # Create scalar grid
         r_grid, phi_grid = np.meshgrid(r_face, phi_face)
@@ -78,9 +86,7 @@ for timestep in times:
 
         # perform midplane calculations
         if gas_press:
-            # print(data['press'].shape)
             drpress = np.gradient(np.squeeze(data['press'][:, 1, :]), data['x1v'], edge_order=2, axis=1)
-            # print(drpress.shape)
             vals = - drpress
             type = "gas_press_force"
 
@@ -108,7 +114,9 @@ for timestep in times:
 
             vals = magtension
             type = "mag_tension"
-
+        title_string = "Constant " + dist + '\nMidplane slice at theta={:.2f} (index={:d})\n'\
+            .format(theta_vals[1], theta_ind) + type \
+                       + "\n$t={:.2f}~[GM/c^3]$ (timestep=".format(data["Time"]) + timestep + ")"
     else:
         # define vertical variable
         orientation = "Vertical"
@@ -127,8 +135,6 @@ for timestep in times:
         nx1 = len(r_vals)
         nx2 = len(theta_vals)
 
-        title_string += 'Vertical slice at phi={:.2f} (index={:d})\n'.format(data['x3v'][1], phi_ind)
-
         # Create scalar grid
         r_grid, theta_grid = np.meshgrid(r_face, theta_face)
         r_grid_v, theta_grid_v = np.meshgrid(r_vals, theta_vals)
@@ -137,9 +143,7 @@ for timestep in times:
 
         # perform vertical calculations
         if gas_press:
-            #print(data['press'].shape)
             drpress = np.gradient(np.squeeze(data['press'][1, :, :]), data['x1v'], edge_order=2, axis=1)
-            #print(drpress.shape)
             vals = - drpress
             type = "gas_press_force"
 
@@ -156,15 +160,9 @@ for timestep in times:
             Bcc3_radial_data = data['Bcc3'][1, :, :]
 
             drBr = np.gradient(Bcc1_radial_data, data['x1v'], edge_order=2, axis=1)
-            #print(Bcc1_radial_data.shape)
-            #print(drBr.shape)
-            #print(data['x3v'].shape)
-            #print(data['Bcc1'].shape)
             dthetaBr = np.gradient(Bcc1_radial_data, data['x2v'], edge_order=2, axis=0)  # derivative of Bcc1 with respect to theta
             dphiBr = np.gradient(data['Bcc1'], data['x3v'], edge_order=1, axis=0)[1, :, :]  # derivative of Bcc1 with respect to phi
 
-            print(Bcc3_radial_data.shape)
-            print(dphiBr.shape)
             # big ass equation (magnetic tension)
             magtension = Bcc1_radial_data * drBr \
                           + np.divide(Bcc2_radial_data * dthetaBr
@@ -174,19 +172,20 @@ for timestep in times:
             vals = magtension
             type = "mag_tension"
 
+        title_string = "Constant " + dist + '\nVertical slice at phi={:.2f} (index={:d})\n'\
+            .format(data['x3v'][1], phi_ind) + type \
+                       + "\n$t={:.2f}~[GM/c^3]$ (timestep=".format(data["Time"]) + timestep + ")"
     # Determine colormapping properties
     if color_log:
         norm = colors.LogNorm()
     else:
         norm = colors.Normalize()
 
-    title_string += type + "\n$t={:.2f}~[GM/c^3]$ (timestep=".format(data["Time"]) + timestep + ")"
-
     # Make plot
     plt.figure()
     plt.title(title_string)
-    print(x_grid.shape)
-    print(y_grid.shape)
+    #print(x_grid.shape)
+    #print(y_grid.shape)
     im = plt.pcolormesh(x_grid, y_grid, vals, cmap=cmap, vmin=vmin, vmax=vmax, norm=norm)
     plt.gca().set_aspect('equal')
     plt.xlim(xlims)
@@ -201,5 +200,5 @@ for timestep in times:
     if not os.path.isdir(filedir):
         os.makedirs(filedir)
     plt.savefig(filedir + filename, bbox_inches='tight')
-    plt.show()
+    #plt.show()
     plt.close()

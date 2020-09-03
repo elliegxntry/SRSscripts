@@ -175,6 +175,8 @@ for timestep in times_to_look_at:
         total_forceA = magtensionA + pressforceA + pmagforceA
         total_forceB = magtensionB + pressforceB + pmagforceB
 
+    save_path_base = "C:/Users/Ellie/Downloads/nerd/SRSPlots/"
+
     #plot constant Beta
     plt.figure()
     if mag_force:
@@ -202,70 +204,37 @@ for timestep in times_to_look_at:
         plt.xlim(5, 20)
     plt.xlabel("Radius")
     plt.ylabel("Radial Forces")
-    plt.title("Time: {}".format(simulation_timeA) + "\nConstant Beta")
+    plt.title("Time: {}".format(simulation_timeA) + "\nTime ind: " + timestep + "\nConstant Beta")
     plt.tight_layout()
     plt.legend()
 
     if mag_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/Beta/mag/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
+            filedir = save_path_base + configA + "/forces_rprofile_local/specific/mag/"
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/Beta/mag/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
-        # plt.show()
-        plt.gca().clear()
-        plt.close()
+            filedir = save_path_base + configA + "/forces_rprofile_local/mag/"
     if nonmag_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/Beta/gas/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
+            filedir = save_path_base + configA + "/forces_rprofile_local/specific/gas/"
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/Beta/gas/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
-        # plt.show()
-        plt.gca().clear()
-        plt.close()
+            filedir = save_path_base + configA + "/forces_rprofile_local/gas/"
     if total_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/Beta/total/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
+            filedir = save_path_base + configA + "/forces_rprofile_local/specific/total/"
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/Beta/total/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
-        #plt.show()
-        plt.gca().clear()
-        plt.close()
+            filedir = save_path_base + configA + "/forces_rprofile_local/total/"
+    if not os.path.isdir(filedir):
+        os.makedirs(filedir)
+    plt.savefig(filedir + figname)
+    #plt.show()
+    plt.gca().clear()
+    plt.close()
 
 
     #plot constant B
@@ -295,67 +264,34 @@ for timestep in times_to_look_at:
         plt.xlim(5, 20)
     plt.xlabel("Radius")
     plt.ylabel("Radial Forces")
-    plt.title("Time: {}".format(simulation_timeA) + "\nConstant B")
+    plt.title("Time: {}".format(simulation_timeA) + "\nTime ind: " + timestep + "\nConstant B")
     plt.tight_layout()
     plt.legend()
 
     if mag_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/B/mag/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
+            filedir = save_path_base + configB + "/forces_rprofile_local/specific/mag/"
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/B/mag/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
-        #plt.show()
-        plt.gca().clear()
-        plt.close()
+            filedir = save_path_base + configB + "/forces_rprofile_local/mag/"
     if nonmag_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/B/gas/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
+            filedir = save_path_base + configB + "/forces_rprofile_local/specific/gas/"
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/B/gas/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
-        #plt.show()
-        plt.gca().clear()
-        plt.close()
+            filedir = save_path_base + configB + "/forces_rprofile_local/gas/"
     if total_force:
         if specific:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/specific/B/total/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
+            filedir = save_path_base + configB + "/forces_rprofile_local/specific/total/"
         else:
             figname = "forces_at_timestep_{}".format(timestep)
-            filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/forces_rprofile_local/B/total/"
-            if not os.path.isdir(filedir):
-                os.makedirs(filedir)
-            # print(filedir)
-            # print("Saving figure " + filedir + figname)
-            plt.savefig(filedir + figname)
-        #plt.show()
-        plt.gca().clear()
-        plt.close()
+            filedir = save_path_base + configB + "/forces_rprofile_local/total/"
+    if not os.path.isdir(filedir):
+        os.makedirs(filedir)
+    plt.savefig(filedir + figname)
+    plt.show()
+    plt.gca().clear()
+    plt.close()

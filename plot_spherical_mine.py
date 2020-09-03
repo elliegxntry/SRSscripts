@@ -26,12 +26,12 @@ sys.path.append("C:/Users/Ellie/Downloads/nerd/scripts/modules/")
 import new_athena_read
 
 # specifications
-times = np.arange(448, 902)
+times = np.arange(902, 1189)
 dist = "B"
-quantity = "press"
+quantity = "vel3"
 do_midplane = False
 do_average = False
-color_log = True
+color_log = False
 r_max = 20
 xlims = [-r_max, r_max]
 ylims = [-r_max, r_max]
@@ -53,12 +53,6 @@ for timestep in times:
     print("Loading time step {}".format(timestep))
     filename = sim_str + quantity + "_" + timestep
 
-    # find theta values
-    def theta_func(xmin, xmax, _, nf):
-        x2_vals = np.linspace(xmin, xmax, nf)
-        theta_vals = x2_vals + (1.0 - h) / 2.0 * np.sin(2.0 * x2_vals)
-        return theta_vals
-
     # Read data
     data = new_athena_read.athdf(filepath, quantities=[quantity])
 
@@ -75,7 +69,7 @@ for timestep in times:
     nx3 = len(phi)
 
     # Create scalar grid
-    if not do_midplane:
+    if do_midplane:
         r_grid, phi_grid = np.meshgrid(r_face, phi_face)
         x_grid = r_grid * np.cos(phi_grid)
         y_grid = r_grid * np.sin(phi_grid)
@@ -86,7 +80,7 @@ for timestep in times:
         y_grid = r_grid * np.cos(theta_grid)
 
     # Perform slicing/averaging of scalar data
-    if not do_midplane:
+    if do_midplane:
         if nx2 % 2 == 0:
             vals = np.mean(data[quantity][:, int(nx2/2)-1:int(nx2/2)+1, :], axis=1)
         else:
@@ -129,7 +123,10 @@ for timestep in times:
 
     plt.colorbar(im)
 
-    filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Slices/" + quantity + "Slices/" + dist + "/"#Sensitive/"
+    if do_midplane:
+        filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/" + config + "/Slices/" + quantity + "MidplaneSlices/"
+    else:
+        filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/" + config + "/Slices/" + quantity + "VerticalSlices/"
     if not os.path.isdir(filedir):
       os.makedirs(filedir)
     print(filedir)

@@ -18,9 +18,10 @@ dist = "B"
 radius = 1.52
 
 # Path to load and save data
-datafile = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2/"
-mdot_path = datafile + "mdot-data_r{}.txt".format(radius)
-filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/mdot_profiles/Constant" + dist + "/chunks/"
+datafile = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/"
+config = "1.1.1-torus2_b-gz2_a0beta500tor" + dist + "_br32x32x64rl2x2/"
+mdot_path = datafile + config + "mdot-data_r{}.txt".format(radius)
+filedir = "C:/Users/Ellie/Downloads/nerd/SRSPlots/" + config + "/mdot_profiles/Constant" + dist + "/chunks/"
 if not os.path.isdir(filedir):
     os.makedirs(filedir)
 

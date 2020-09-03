@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import os
 
 # specifications
-variable_name = "total_energy"
+variable_name = "rad_ME"
 
 # path to load data
 datapath = "C:/Users/Ellie/Downloads/nerd/SRSData/"
@@ -31,7 +31,7 @@ datapath_baseB = datapath + configB
 # path to save data
 filenameA = datapath_baseA + "/" + configA + ".hst"
 filenameB = datapath_baseB + "/" + configB + ".hst"
-fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/time_quantity_profiles/hstplots/"
+fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSPlots/both_sims/time_quantity_profiles/hstplots/"
 if not os.path.isdir(fig_save_path):
     os.makedirs(fig_save_path)
 
@@ -66,13 +66,14 @@ rad_ME_valuesB = data_valuesB[:, 10]
 theta_ME_valuesB = data_valuesB[:, 11]
 phi_ME_valuesB = data_valuesB[:, 12]
 
-plt.plot(time_valuesA, total_energy_valuesA, label="Constant Beta", color="r")
-plt.plot(time_valuesB, total_energy_valuesB, label="Constant B", color="b")
-plt.yscale("log")
+plt.plot(time_valuesA, rad_ME_valuesA, label="Constant Beta", color="r")
+plt.plot(time_valuesB, rad_ME_valuesB, label="Constant B", color="b")
+#plt.xscale('log')
+#plt.yscale('log')
 plt.xlabel("Time [GM/c^3]")
-plt.title("Volumetrically averaged total energy over time")
-plt.ylabel("Total Energy")
-figname = "vavg_" + variable_name
+plt.title("Volumetrically averaged radial magnetic energy over time")
+plt.ylabel("Radial ME")
+figname = "vavg_" + variable_name# + "_logscale"
 plt.legend()
 plt.tight_layout()
 plt.savefig(fig_save_path + figname)

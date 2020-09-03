@@ -1,4 +1,4 @@
-"""
+"""s
 This script takes all the mdots calculated from tavg_mdot.py in each chunk and graphs them on the same plot
 INPUTS:
     - Distribution
@@ -13,51 +13,68 @@ import matplotlib.pyplot as plt
 import os
 
 # Things to modify script
-dist = "Beta"
+dist = "B"
 
 # load paths
-data_load_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/mdotAsR/time/Constant" + dist + "/"
-fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSPlots/Profiles/direction_quantity_profiles/tavg_mdot/all_chunks/"
+data_load_path = "C:/Users/Ellie/Downloads/nerd/SRSData/Reduced/1.1.1-torus2_b-gz2_a0beta500tor" + dist + \
+            "_br32x32x64rl2x2/tavg_mdot_through_shells_over_r/"
+fig_save_path = "C:/Users/Ellie/Downloads/nerd/SRSPlots/1.1.1-torus2_b-gz2_a0beta500tor" + dist\
+                + "_br32x32x64rl2x2/tavg_mdot/all_times"
 if not os.path.isdir(fig_save_path):
     os.makedirs(fig_save_path)
 filestem = "time_mdot_over_r_"
 datapath = data_load_path + filestem
 
 # load each chunk from file
-chunk1 = np.loadtxt(datapath + "chunk1.txt")
-chunk2 = np.loadtxt(datapath + "chunk2.txt")
-chunk3 = np.loadtxt(datapath + "chunk3.txt")
-chunk4 = np.loadtxt(datapath + "chunk4.txt")
-chunk5 = np.loadtxt(datapath + "chunk5.txt")
-chunk6 = np.loadtxt(datapath + "chunk6.txt")
-chunk7 = np.loadtxt(datapath + "chunk7.txt")
-print(chunk1.shape)
+t0t500 = np.loadtxt(datapath + "t0t500.txt")
+t500t1000 = np.loadtxt(datapath + "t500t1000.txt")
+t1000t1500 = np.loadtxt(datapath + "t1000t1500.txt")
+t1500t2000 = np.loadtxt(datapath + "t1500t2000.txt")
+t2000t2500 = np.loadtxt(datapath + "t2000t2500.txt")
+t2500t3000 = np.loadtxt(datapath + "t2500t3000.txt")
+t3000t3500 = np.loadtxt(datapath + "t3000t3500.txt")
+t3500t4000 = np.loadtxt(datapath + "t3500t4000.txt")
+t4000t4500 = np.loadtxt(datapath + "t4000t4500.txt")
+t4500t5000 = np.loadtxt(datapath + "t4500t5000.txt")
+t5000t5500 = np.loadtxt(datapath + "t5000t5500.txt")
+t5500t5945 = np.loadtxt(datapath + "t5500t5945.txt")
+print(t0t500.shape)
 
 # take mean of each chunk
-chunk1_mean = np.mean(chunk1, axis=0)
-chunk2_mean = np.mean(chunk2, axis=0)
-chunk3_mean = np.mean(chunk3, axis=0)
-chunk4_mean = np.mean(chunk4, axis=0)
-chunk5_mean = np.mean(chunk5, axis=0)
-chunk6_mean = np.mean(chunk6, axis=0)
-chunk7_mean = np.mean(chunk7, axis=0)
+t0t500_mean = np.mean(t0t500, axis=0)
+t500t1000_mean = np.mean(t500t1000, axis=0)
+t1000t1500_mean = np.mean(t1000t1500, axis=0)
+t1500t2000_mean = np.mean(t1500t2000, axis=0)
+t2000t2500_mean = np.mean(t2000t2500, axis=0)
+t2500t3000_mean = np.mean(t2500t3000, axis=0)
+t3000t3500_mean = np.mean(t3000t3500, axis=0)
+t3500t4000_mean = np.mean(t3500t4000, axis=0)
+t4000t4500_mean = np.mean(t4000t4500, axis=0)
+t4500t5000_mean = np.mean(t4500t5000, axis=0)
+t5000t5500_mean = np.mean(t5000t5500, axis=0)
+t5500t5945_mean = np.mean(t5500t5945, axis=0)
 
 # plot chunks
 plt.figure()
 colormap = plt.cm.plasma
 plt.gca().set_prop_cycle(plt.cycler('color', plt.cm.plasma(np.linspace(0, 8))))
-plt.plot(chunk1_mean, label="t=0 GM/c^3 to t=500 GM/c^3")
-plt.plot(chunk2_mean, label="t=500 GM/c^3 to t=1000 GM/c^3")
-plt.plot(chunk3_mean, label="t=1000 GM/c^3 to t=1500 GM/c^3")
-plt.plot(chunk4_mean, label="t=1500 GM/c^3 to t=2000 GM/c^3")
-plt.plot(chunk5_mean, label="t=2000 GM/c^3 to t=2500 GM/c^3")
-plt.plot(chunk6_mean, label="t=2500 GM/c^3 to t=3000 GM/c^3")
-plt.plot(chunk7_mean, label="t=3000 GM/c^3 to t=3350 GM/c^3")
+plt.plot(t0t500_mean, label="t=0 GM/c^3 to t=500 GM/c^3")
+plt.plot(t500t1000_mean, label="t=500 GM/c^3 to t=1000 GM/c^3")
+plt.plot(t1000t1500_mean, label="t=1000 GM/c^3 to t=1500 GM/c^3")
+plt.plot(t1500t2000_mean, label="t=1500 GM/c^3 to t=2000 GM/c^3")
+plt.plot(t2000t2500_mean, label="t=2000 GM/c^3 to t=2500 GM/c^3")
+plt.plot(t2500t3000_mean, label="t=2500 GM/c^3 to t=3000 GM/c^3")
+plt.plot(t3000t3500_mean, label="t=3000 GM/c^3 to t=3350 GM/c^3")
+plt.plot(t3500t4000_mean, label="t=3500 GM/c^3 to t=4000 GM/c^3")
+plt.plot(t4000t4500_mean, label="t=4000 GM/c^3 to t=4500 GM/c^3")
+plt.plot(t4500t5000_mean, label="t=4500 GM/c^3 to t=5000 GM/c^3")
+plt.plot(t5000t5500_mean, label="t=5000 GM/c^3 to t=5500 GM/c^3")
+plt.plot(t5500t5945_mean, label="t=5500 GM/c^3 to t=5945 GM/c^3")
 plt.xlabel("Radius [GM/c^2]")
 plt.ylabel("Mass Flux [c^3/G]")
 plt.legend()
 plt.title("Time averaged mass flux over different time intervals" + "\n" + "Constant " + dist)
-plt.tight_layout()
+#plt.tight_layout()
 
 # save figure
 plt.savefig(fig_save_path + "Constant" + dist)
